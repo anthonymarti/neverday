@@ -323,6 +323,58 @@
   /* no hover on touch — just show the asides */
   @media(hover:none){.step .aside{max-height:none;opacity:1;transform:none;margin-top:14px}}
 
+  /* ---- start / booking form ---- */
+  /* this panel can be taller than the viewport, so flow the footer instead of
+     pinning it (space-between keeps it at the bottom when there's room) */
+  #start{justify-content:space-between}
+  #start footer{position:static;margin-top:clamp(48px,7vh,72px)}
+  #start .inner{position:relative;z-index:1}
+  .start-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(36px,6vw,90px);align-items:start}
+  @media(max-width:820px){.start-grid{grid-template-columns:1fr;gap:36px}}
+  .start-pitch h2{font-size:clamp(32px,5.5vw,60px);font-weight:600;letter-spacing:-.025em;line-height:1.02}
+  .start-pitch h2 span{display:block;color:var(--mute);font-weight:300}
+  .start-pitch p{margin-top:20px;font-size:clamp(15px,1.8vw,18px);line-height:1.55;color:var(--mute);max-width:34ch}
+  .start-pitch .direct{margin-top:24px;font-size:14px;color:var(--mute)}
+  .start-pitch .direct a{color:var(--paper);text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .3s}
+  .start-pitch .direct a:hover{border-color:var(--paper)}
+
+  .lead-form{display:flex;flex-direction:column;gap:clamp(18px,2.4vh,24px)}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.4vw,28px)}
+  @media(max-width:520px){.form-row{grid-template-columns:1fr;gap:18px}}
+  .field{display:flex;flex-direction:column;gap:8px}
+  .field > label,.fieldset > .flabel{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+  .field input,.field textarea{
+    width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);
+    color:var(--paper);font:inherit;font-size:15px;padding:10px 0;transition:border-color .35s var(--ease);
+  }
+  .field input::placeholder,.field textarea::placeholder{color:rgba(138,138,134,.7)}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--paper)}
+  .field input:user-invalid,.field textarea:user-invalid{border-color:#B23A1E}
+  .field textarea{resize:vertical;min-height:64px;line-height:1.5}
+  .field .req{color:var(--mute)}
+
+  .fieldset{display:flex;flex-direction:column;gap:12px;border:none}
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{position:relative;display:inline-flex;align-items:center}
+  .chip input{position:absolute;opacity:0;width:0;height:0}
+  .chip span{
+    display:inline-block;padding:9px 16px;border:1px solid var(--line);border-radius:999px;
+    font-size:13px;color:var(--mute);cursor:pointer;user-select:none;
+    transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease);
+  }
+  .chip:hover span{border-color:rgba(255,255,255,.3);color:var(--paper)}
+  .chip:has(input:checked) span{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .chip input:focus-visible + span{outline:2px solid var(--paper);outline-offset:3px}
+
+  .lead-form .cta{align-self:flex-start;margin-top:4px}
+  .form-note{font-size:13px;line-height:1.5;color:var(--mute)}
+  .form-done{
+    display:none;padding:24px 26px;border:1px solid var(--line);border-radius:10px;
+    font-size:15px;line-height:1.55;color:var(--paper);background:rgba(255,255,255,.03);
+  }
+  .lead-form.sent{display:none}
+  .lead-form.sent + .form-done{display:block;animation:rise .6s var(--ease) forwards}
+
   /* ---- footer (pinned in last panel) ---- */
   footer{
     position:absolute;left:0;right:0;bottom:0;
@@ -364,7 +416,7 @@
         <a class="nlink" href="#services"><span class="swap"><span>Services</span><span aria-hidden="true">Services</span></span></a>
         <a class="nlink" href="#process"><span class="swap"><span>Process</span><span aria-hidden="true">Process</span></span></a>
       </nav>
-      <a class="cta nav-cta" href="mailto:hello@neverday.com">Start a project <span class="arr">→</span></a>
+      <a class="cta nav-cta" href="#start">Start a project <span class="arr">→</span></a>
     </div>
   </header>
 
@@ -513,6 +565,84 @@
             <h3>Send it off</h3>
             <p class="formal">We launch, hand over the keys, and stay close through the first busy stretch while everything settles.</p>
             <p class="aside"><em>Between us —</em> you will not get a goodbye Loom and a cheerful "good luck out there!"</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="start">
+      <div class="inner">
+        <div class="start-grid">
+          <div class="start-pitch">
+            <span class="sec-num" data-reveal style="display:block;margin-bottom:18px">05 — Start a project</span>
+            <h2 data-reveal style="--d:1">Let's build something<span>they can't ignore.</span></h2>
+            <p data-reveal style="--d:2">Tell us a little about the project and we'll come back within two business days — usually with questions, always with enthusiasm.</p>
+            <p class="direct" data-reveal style="--d:3">Prefer email? <a href="mailto:hello@neverday.com">hello@neverday.com</a></p>
+          </div>
+
+          <form class="lead-form" id="leadForm" data-reveal style="--d:2" novalidate>
+            <div class="form-row">
+              <div class="field">
+                <label for="lf-name">Name <span class="req">*</span></label>
+                <input id="lf-name" name="name" type="text" autocomplete="name" placeholder="Jane Maker" required>
+              </div>
+              <div class="field">
+                <label for="lf-email">Email <span class="req">*</span></label>
+                <input id="lf-email" name="email" type="email" autocomplete="email" placeholder="jane@business.com" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="lf-business">Business / brand <span class="req">*</span></label>
+              <input id="lf-business" name="business" type="text" autocomplete="organization" placeholder="The name above the door" required>
+            </div>
+
+            <fieldset class="fieldset">
+              <span class="flabel">What you need <span class="req">(pick any)</span></span>
+              <div class="chips">
+                <label class="chip"><input type="checkbox" name="need" value="Brand Identity"><span>Identity</span></label>
+                <label class="chip"><input type="checkbox" name="need" value="Web Design & Build"><span>Web</span></label>
+                <label class="chip"><input type="checkbox" name="need" value="Motion & Animation"><span>Motion</span></label>
+                <label class="chip"><input type="checkbox" name="need" value="Art Direction"><span>Art Direction</span></label>
+                <label class="chip"><input type="checkbox" name="need" value="Not sure yet"><span>Not sure yet</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="fieldset">
+              <span class="flabel">Budget</span>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="budget" value="Under $5k"><span>Under $5k</span></label>
+                <label class="chip"><input type="radio" name="budget" value="$5k–$15k"><span>$5k–$15k</span></label>
+                <label class="chip"><input type="radio" name="budget" value="$15k–$40k"><span>$15k–$40k</span></label>
+                <label class="chip"><input type="radio" name="budget" value="$40k+"><span>$40k+</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="fieldset">
+              <span class="flabel">Timeline</span>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="timeline" value="ASAP"><span>ASAP</span></label>
+                <label class="chip"><input type="radio" name="timeline" value="1–3 months"><span>1–3 months</span></label>
+                <label class="chip"><input type="radio" name="timeline" value="3–6 months"><span>3–6 months</span></label>
+                <label class="chip"><input type="radio" name="timeline" value="Flexible"><span>Flexible</span></label>
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="lf-details">Project details <span class="req">*</span></label>
+              <textarea id="lf-details" name="details" rows="3" placeholder="What are you making, who's it for, and what would make this a win?" required></textarea>
+            </div>
+
+            <div class="field">
+              <label for="lf-source">How'd you hear about us?</label>
+              <input id="lf-source" name="source" type="text" placeholder="Instagram, a friend, walked past a sign…">
+            </div>
+
+            <button class="cta" type="submit">Send project brief <span class="arr">→</span></button>
+            <p class="form-note">This opens your email app with everything filled in — just hit send. Or write us directly at hello@neverday.com.</p>
+          </form>
+          <div class="form-done" id="formDone" role="status">
+            <b>Brief on its way.</b> Your email app should have opened with the details ready to send. Didn't pop up? Email <a href="mailto:hello@neverday.com" style="color:var(--paper)">hello@neverday.com</a> and we'll take it from there.
           </div>
         </div>
       </div>
@@ -783,6 +913,41 @@
     var a = e.target.closest('a[href^="#"]');
     if(a) closeStudy();
   });
+
+  /* ======================================================================
+     BOOKING FORM — compose a pre-filled email (swap to an endpoint later)
+     ====================================================================== */
+  var leadForm = document.getElementById('leadForm');
+  if(leadForm){
+    leadForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!leadForm.checkValidity()){ leadForm.reportValidity(); return; }
+
+      var fd = new FormData(leadForm);
+      var get = function(n){ return (fd.get(n)||'').toString().trim(); };
+      var needs = fd.getAll('need');
+
+      var lines = [
+        'Name: ' + get('name'),
+        'Email: ' + get('email'),
+        'Business: ' + get('business'),
+        'Needs: ' + (needs.length ? needs.join(', ') : '—'),
+        'Budget: ' + (get('budget') || '—'),
+        'Timeline: ' + (get('timeline') || '—'),
+        'Heard via: ' + (get('source') || '—'),
+        '',
+        'Project details:',
+        get('details')
+      ];
+      var subject = 'Project brief — ' + (get('business') || get('name') || 'New lead');
+      var href = 'mailto:hello@neverday.com'
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(lines.join('\n'));
+
+      window.location.href = href;
+      leadForm.classList.add('sent');   // reveals the #formDone confirmation
+    });
+  }
 })();
 </script>
 </body>
