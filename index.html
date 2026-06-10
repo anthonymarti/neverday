@@ -25,6 +25,11 @@
     scroll-behavior:smooth;
     scroll-padding-top:0;
   }
+  /* On touch / small screens, full-page snapping fights the user — let it scroll freely */
+  @media (max-width:720px),(hover:none) and (pointer:coarse){
+    html{scroll-snap-type:none}
+    .panel{scroll-snap-align:none}
+  }
   body{
     background:var(--ink);
     color:var(--paper);
@@ -157,11 +162,13 @@
   .lede{animation-delay:.78s}
   .hero .cta{animation-delay:.96s}
   .scroll-hint{
-    position:absolute;bottom:clamp(20px,4vh,34px);left:50%;transform:translateX(-50%);
+    position:absolute;bottom:clamp(20px,4vh,34px);left:0;right:0;
+    display:flex;flex-direction:column;align-items:center;
     font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);
     opacity:0;animation:rise 1s var(--ease) 1.3s forwards;
   }
-  .scroll-hint::after{content:"";display:block;width:1px;height:34px;margin:12px auto 0;background:linear-gradient(var(--mute),transparent);animation:drop 2.2s var(--ease) infinite}
+  .scroll-hint span{padding-left:.2em} /* offset trailing letter-spacing so the word sits truly centered */
+  .scroll-hint::after{content:"";width:1px;height:34px;margin-top:12px;background:linear-gradient(var(--mute),transparent);animation:drop 2.2s var(--ease) infinite}
 
   /* ---- section heads ---- */
   .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:clamp(28px,4.5vh,52px)}
@@ -264,7 +271,7 @@
         <p class="lede">A creative studio building maximal web, identity, and motion for restaurants and local makers who'd rather be unforgettable.</p>
         <!--<a class="cta" href="mailto:hello@neverday.com">Start a project <span class="arr">→</span></a>-->
       </div>
-      <div class="scroll-hint">Scroll</div>
+      <div class="scroll-hint"><span>Scroll</span></div>
     </section>
 
     <section class="panel" id="about">
