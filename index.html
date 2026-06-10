@@ -137,8 +137,10 @@
   .inner{width:100%;max-width:1200px;margin:0 auto}
 
   /* ---- hero ---- */
-  .hero{align-items:center;text-align:center}
-  .hero .inner{display:flex;flex-direction:column;align-items:center;gap:clamp(34px,5vh,60px)}
+  /* symmetric vertical padding => content sits at the true centre of the page,
+     equal breathing room above the mark and below the CTA */
+  .hero{align-items:center;text-align:center;padding-top:var(--bar);padding-bottom:var(--bar)}
+  .hero .inner{display:flex;flex-direction:column;align-items:center;gap:clamp(22px,3.4vh,40px)}
   .mark{
     width:clamp(88px,14vw,156px);
     height:clamp(88px,14vw,156px);
@@ -183,12 +185,99 @@
   .stat .l{margin-top:6px;font-size:13px;color:var(--mute);line-height:1.5}
 
   /* work */
-  .work-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
-  .work-item{background:var(--ink);padding:clamp(26px,3.5vw,38px);transition:background .45s var(--ease)}
-  .work-item:hover{background:#111}
-  .work-item .kind{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
-  .work-item h3{margin:14px 0 8px;font-size:clamp(20px,2.4vw,26px);font-weight:600;letter-spacing:-.01em}
-  .work-item p{font-size:14px;line-height:1.55;color:var(--mute);max-width:34ch}
+  #work{overflow:hidden}
+  /* full-bleed colour wash that fades to the hovered project's accent */
+  .work-bg{position:absolute;inset:0;z-index:0;background:var(--accent,#000);opacity:0;transition:opacity .55s var(--ease),background-color .55s var(--ease);pointer-events:none}
+  #work.tint .work-bg{opacity:1}
+  #work .inner{position:relative;z-index:1}
+
+  .work-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+  @media(max-width:640px){.work-grid{grid-template-columns:1fr}}
+  .work-item{
+    position:relative;
+    display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+    text-align:left;width:100%;
+    background:transparent;border:none;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:clamp(26px,3.4vw,40px);
+    font:inherit;color:var(--paper);cursor:pointer;
+    transition:opacity .4s var(--ease),transform .5s var(--ease);
+  }
+  /* dim the siblings so the hovered project takes focus */
+  .work-grid:hover .work-item{opacity:.38}
+  .work-grid:hover .work-item:hover{opacity:1}
+  .work-item .kind{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);transition:color .4s}
+  .work-item:hover .kind{color:rgba(255,255,255,.7)}
+  .work-item .wtitle{margin:6px 0 2px;font-size:clamp(22px,2.6vw,30px);font-weight:600;letter-spacing:-.012em;line-height:1.05}
+  .work-item .wdesc{font-size:14px;line-height:1.55;color:var(--mute);max-width:34ch;transition:color .4s}
+  .work-item:hover .wdesc{color:rgba(255,255,255,.82)}
+  .work-item .wgo{
+    margin-top:8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper);
+    opacity:0;transform:translateY(6px);transition:opacity .45s var(--ease),transform .45s var(--ease);
+  }
+  .work-item:hover .wgo,.work-item:focus-visible .wgo{opacity:1;transform:none}
+  .work-item:focus-visible{outline:2px solid var(--paper);outline-offset:-2px}
+
+  /* custom "Open" cursor (desktop pointer only) */
+  .cursor{
+    position:fixed;top:0;left:0;z-index:70;pointer-events:none;
+    width:88px;height:88px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--paper);color:var(--ink);
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+    transform:translate(-50%,-50%) scale(0);
+    transition:transform .4s var(--ease),background .35s;
+    will-change:transform,left,top;
+  }
+  .cursor.show{transform:translate(-50%,-50%) scale(1)}
+  .cursor .arrow{margin-left:.3em}
+  body.cursor-active #work .work-item{cursor:none}
+
+  /* ---- case study overlay ---- */
+  .study{
+    position:fixed;inset:0;z-index:90;overflow-y:auto;background:var(--ink);
+    opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility .5s;
+    scroll-behavior:smooth;
+  }
+  .study.open{opacity:1;visibility:visible}
+  html.study-open,body.study-open{overflow:hidden}
+  .study-top{
+    position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;
+    height:var(--bar);padding:0 clamp(24px,6vw,72px);
+    background:rgba(10,10,10,.55);backdrop-filter:saturate(140%) blur(14px);-webkit-backdrop-filter:saturate(140%) blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .study-close{
+    display:inline-flex;align-items:center;gap:.6em;background:none;border:none;cursor:pointer;
+    color:var(--paper);font:inherit;font-size:13px;letter-spacing:.02em;
+  }
+  .study-close .x{font-size:18px;line-height:1;transition:transform .4s var(--ease)}
+  .study-close:hover .x{transform:rotate(90deg)}
+  .study-close:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
+  .study-tag{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+  .study-inner{max-width:980px;margin:0 auto;padding:clamp(40px,8vh,90px) clamp(24px,6vw,72px) clamp(80px,14vh,140px);
+    opacity:0;transform:translateY(24px);transition:opacity .6s var(--ease) .12s,transform .6s var(--ease) .12s}
+  .study.open .study-inner{opacity:1;transform:none}
+  .study-kind{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent2,var(--mute))}
+  .study-title{margin:18px 0 0;font-size:clamp(40px,9vw,96px);font-weight:600;letter-spacing:-.03em;line-height:.98}
+  .study-lede{margin-top:24px;font-size:clamp(18px,2.4vw,26px);line-height:1.4;font-weight:300;color:var(--paper);max-width:30ch}
+  .study-meta{margin-top:clamp(32px,5vh,52px);display:flex;flex-wrap:wrap;gap:32px 56px;padding-bottom:clamp(28px,4vh,40px);border-bottom:1px solid var(--line)}
+  .study-meta .k{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+  .study-meta .v{margin-top:7px;font-size:15px;line-height:1.5}
+  .study-shot{margin-top:clamp(28px,4vh,44px);aspect-ratio:16/9;border-radius:6px;display:flex;align-items:flex-end;padding:22px;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,250,248,.85);
+    background:linear-gradient(135deg,var(--accent2,#333),rgba(10,10,10,.6))}
+  .study-chapter{margin-top:clamp(40px,6vh,72px);display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,2fr);gap:clamp(16px,4vw,56px)}
+  @media(max-width:640px){.study-chapter{grid-template-columns:1fr;gap:10px}}
+  .study-chapter h3{font-size:clamp(20px,2.6vw,28px);font-weight:600;letter-spacing:-.01em}
+  .study-chapter p{font-size:16px;line-height:1.65;color:var(--mute)}
+  .study-stats{margin-top:clamp(40px,6vh,72px);display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:28px;
+    padding-top:clamp(28px,4vh,40px);border-top:1px solid var(--line)}
+  .study-stats .n{font-size:clamp(34px,5vw,52px);font-weight:600;letter-spacing:-.02em;color:var(--accent2,var(--paper))}
+  .study-stats .l{margin-top:8px;font-size:13px;color:var(--mute);line-height:1.5}
+  .study-cta{margin-top:clamp(48px,8vh,88px);display:flex;flex-wrap:wrap;align-items:center;gap:20px 32px;justify-content:space-between;
+    padding-top:clamp(32px,5vh,48px);border-top:1px solid var(--line)}
+  .study-cta p{font-size:clamp(20px,3vw,30px);font-weight:300;letter-spacing:-.01em;max-width:18ch}
+  @media(prefers-reduced-motion:reduce){.cursor{display:none}}
 
   /* services */
   .svc-list{display:flex;flex-direction:column}
@@ -290,32 +379,37 @@
     </section>
 
     <section class="panel" id="work">
+      <div class="work-bg" aria-hidden="true"></div>
       <div class="inner">
         <div class="sec-head">
           <span class="sec-num" data-reveal>02</span>
           <h2 class="sec-title" data-reveal style="--d:1">Work</h2>
         </div>
         <div class="work-grid">
-          <div class="work-item" data-reveal style="--d:2">
-            <div class="kind">Identity · Web</div>
-            <h3>Pilot Light</h3>
-            <p>A full rebrand and one-page site for a wood-fired neighborhood pizzeria — warm type, a flickering logo, menus that feel like the room.</p>
-          </div>
-          <div class="work-item" data-reveal style="--d:3">
-            <div class="kind">Web · Motion</div>
-            <h3>Field Notes Coffee</h3>
-            <p>An animated storefront for a roaster's subscription, built around the ritual of the morning pour.</p>
-          </div>
-          <div class="work-item" data-reveal style="--d:4">
-            <div class="kind">Identity</div>
-            <h3>Marigold Floral</h3>
-            <p>A bold botanical wordmark and packaging system for a studio florist that wanted to look anything but delicate.</p>
-          </div>
-          <div class="work-item" data-reveal style="--d:5">
-            <div class="kind">Web</div>
-            <h3>The Side Door</h3>
-            <p>A reservations-first microsite for a speakeasy — dark, tactile, and impossible to forget.</p>
-          </div>
+          <button class="work-item" type="button" data-slug="pilot-light" data-accent="#B23A1E" data-reveal style="--d:2">
+            <span class="kind">Identity · Web</span>
+            <span class="wtitle">Pilot Light</span>
+            <span class="wdesc">A full rebrand and one-page site for a wood-fired neighborhood pizzeria — warm type, a flickering logo, menus that feel like the room.</span>
+            <span class="wgo">Open case study ↗</span>
+          </button>
+          <button class="work-item" type="button" data-slug="field-notes" data-accent="#3F5E50" data-reveal style="--d:3">
+            <span class="kind">Web · Motion</span>
+            <span class="wtitle">Field Notes Coffee</span>
+            <span class="wdesc">An animated storefront for a roaster's subscription, built around the ritual of the morning pour.</span>
+            <span class="wgo">Open case study ↗</span>
+          </button>
+          <button class="work-item" type="button" data-slug="marigold" data-accent="#9B2D5E" data-reveal style="--d:4">
+            <span class="kind">Identity</span>
+            <span class="wtitle">Marigold Floral</span>
+            <span class="wdesc">A bold botanical wordmark and packaging system for a studio florist that wanted to look anything but delicate.</span>
+            <span class="wgo">Open case study ↗</span>
+          </button>
+          <button class="work-item" type="button" data-slug="side-door" data-accent="#3A2E5C" data-reveal style="--d:5">
+            <span class="kind">Web</span>
+            <span class="wtitle">The Side Door</span>
+            <span class="wdesc">A reservations-first microsite for a speakeasy — dark, tactile, and impossible to forget.</span>
+            <span class="wgo">Open case study ↗</span>
+          </button>
         </div>
       </div>
     </section>
@@ -398,6 +492,18 @@
       </footer>
     </section>
   </main>
+
+  <!-- custom "Open" cursor (desktop) -->
+  <div class="cursor" id="cursor" aria-hidden="true">Open<span class="arrow">↗</span></div>
+
+  <!-- case study overlay -->
+  <div class="study" id="study" role="dialog" aria-modal="true" aria-label="Case study" aria-hidden="true">
+    <div class="study-top">
+      <span class="study-tag">Neverday · Case study</span>
+      <button class="study-close" id="studyClose" type="button"><span class="x">✕</span> Close</button>
+    </div>
+    <div class="study-inner" id="studyInner"></div>
+  </div>
 
 <script>
 (function(){
@@ -486,6 +592,162 @@
     stateEl.textContent = soundOn ? 'on' : 'off';
     toggle.setAttribute('aria-pressed', String(soundOn));
     if(soundOn){ ensure(); tick(); }
+  });
+
+  /* ======================================================================
+     WORK: accent wash on hover, "Open" cursor, and case-study overlay
+     ====================================================================== */
+  var STUDIES = {
+    'pilot-light':{
+      title:'Pilot Light', kind:'Identity · Web', accent:'#B23A1E', year:'2025',
+      services:'Brand Identity, Web Design, Menu System', sector:'Wood-fired pizzeria',
+      lede:'A corner pizzeria that wanted to feel like the warmest room on the block.',
+      chapters:[
+        {h:'The challenge',p:'Pilot Light had a wood oven, a line out the door on Fridays, and a logo their cousin made in 2014. The food said “destination.” The brand said “maybe order delivery.” They needed an identity that carried the heat of the room onto a screen.'},
+        {h:'What we did',p:'We built a warm, high-contrast identity around a single idea — the pilot light that never goes out. The wordmark carries a small flame that flickers on the site, the menus borrow the cadence of a hand-set chalkboard, and the whole one-page site is designed to be read with a phone in one hand and a slice in the other.'},
+        {h:'The result',p:'A site that loads in under a second, a brand the owners actually use on everything from the window to the pizza boxes, and a Friday line that somehow got longer.'}
+      ],
+      stats:[{n:'+38%',l:'online orders in the first month'},{n:'0.8s',l:'time to interactive'},{n:'1',l:'flame nobody forgets'}]
+    },
+    'field-notes':{
+      title:'Field Notes Coffee', kind:'Web · Motion', accent:'#3F5E50', year:'2025',
+      services:'Web Design, Motion, Subscription UX', sector:'Specialty roaster',
+      lede:'A subscription site built around the ritual of the morning pour.',
+      chapters:[
+        {h:'The challenge',p:'Field Notes roasts beautifully and writes tasting notes like a travel journal. Their old shop buried all of that under a generic store template — every bag looked the same, and the subscription was three confusing clicks too deep.'},
+        {h:'What we did',p:'We rebuilt the storefront around motion that mirrors the pour — type and imagery that bloom as you scroll, like coffee hitting water. The subscription became the front door, not a footnote, with a flow you can finish in two taps.'},
+        {h:'The result',p:'Subscriptions became the roaster’s steadiest revenue, and the site finally feels like the cup it’s selling.'}
+      ],
+      stats:[{n:'2-tap',l:'subscription checkout'},{n:'+61%',l:'recurring subscribers'},{n:'4.9★',l:'average customer rating'}]
+    },
+    'marigold':{
+      title:'Marigold Floral', kind:'Identity', accent:'#9B2D5E', year:'2024',
+      services:'Brand Identity, Packaging, Art Direction', sector:'Studio florist',
+      lede:'A florist that wanted to look anything but delicate.',
+      chapters:[
+        {h:'The challenge',p:'Every florist brand looks the same — thin script, dusty pink, a watercolor leaf. Marigold’s arrangements are bold, architectural, a little punk. The brand needed to match the work in the bucket, not the cliché.'},
+        {h:'What we did',p:'We drew a heavy botanical wordmark with a stem that doubles as a stroke, paired it with a saturated magenta, and built a packaging system — sleeves, stickers, care cards — that reads from across a farmers market.'},
+        {h:'The result',p:'A look people photograph and post without being asked, and a wholesale list that grew on the strength of the label alone.'}
+      ],
+      stats:[{n:'3×',l:'wholesale accounts in a year'},{n:'+120%',l:'tagged posts on socials'},{n:'1',l:'very un-delicate wordmark'}]
+    },
+    'side-door':{
+      title:'The Side Door', kind:'Web', accent:'#3A2E5C', year:'2024',
+      services:'Web Design, Development, Reservations', sector:'Speakeasy bar',
+      lede:'A reservations-first microsite that’s dark, tactile, and hard to forget.',
+      chapters:[
+        {h:'The challenge',p:'The Side Door is meant to be a little hard to find — in person. Online, that mystique was just a broken Instagram link and no way to book a table.'},
+        {h:'What we did',p:'We built a single, atmospheric page that puts reservations first without killing the mood — deep blacks, tactile hovers, and a booking flow that feels like getting let in. Just enough information, never the whole secret.'},
+        {h:'The result',p:'Weeknights book out in advance now, and the staff stopped fielding “are you open?” DMs at midnight.'}
+      ],
+      stats:[{n:'+44%',l:'weeknight reservations'},{n:'-90%',l:'“are you open?” messages'},{n:'1',l:'door worth finding'}]
+    }
+  };
+
+  var workSection = document.getElementById('work');
+  var workBg = workSection ? workSection.querySelector('.work-bg') : null;
+  var workGrid = workSection ? workSection.querySelector('.work-grid') : null;
+  var workItems = Array.prototype.slice.call(document.querySelectorAll('.work-item'));
+  var fine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  /* accent wash following the hovered project */
+  workItems.forEach(function(item){
+    item.addEventListener('pointerenter', function(){
+      if(!workBg) return;
+      workBg.style.background = item.dataset.accent;
+      workSection.classList.add('tint');
+    });
+  });
+  if(workGrid){
+    workGrid.addEventListener('pointerleave', function(){
+      workSection.classList.remove('tint');
+    });
+  }
+
+  /* custom "Open" cursor — lerped for a smooth trail */
+  var cursor = document.getElementById('cursor');
+  if(cursor && fine && !reduce){
+    var cx = innerWidth/2, cy = innerHeight/2, tx = cx, ty = cy, raf;
+    function loop(){
+      cx += (tx-cx)*0.18; cy += (ty-cy)*0.18;
+      cursor.style.left = cx+'px'; cursor.style.top = cy+'px';
+      raf = requestAnimationFrame(loop);
+    }
+    window.addEventListener('pointermove', function(e){ tx = e.clientX; ty = e.clientY; }, {passive:true});
+    workItems.forEach(function(item){
+      item.addEventListener('pointerenter', function(){
+        cursor.classList.add('show'); document.body.classList.add('cursor-active');
+        if(!raf) raf = requestAnimationFrame(loop);
+      });
+      item.addEventListener('pointerleave', function(){
+        cursor.classList.remove('show'); document.body.classList.remove('cursor-active');
+      });
+    });
+  }
+
+  /* case-study overlay */
+  var study = document.getElementById('study');
+  var studyInner = document.getElementById('studyInner');
+  var studyClose = document.getElementById('studyClose');
+  var lastFocus = null;
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderStudy(d){
+    var meta =
+      '<div class="study-meta">' +
+        '<div><div class="k">Services</div><div class="v">'+esc(d.services)+'</div></div>' +
+        '<div><div class="k">Sector</div><div class="v">'+esc(d.sector)+'</div></div>' +
+        '<div><div class="k">Year</div><div class="v">'+esc(d.year)+'</div></div>' +
+      '</div>';
+    var chapters = d.chapters.map(function(c){
+      return '<div class="study-chapter"><h3>'+esc(c.h)+'</h3><p>'+esc(c.p)+'</p></div>';
+    }).join('');
+    var stats = '<div class="study-stats">' + d.stats.map(function(s){
+      return '<div><div class="n">'+esc(s.n)+'</div><div class="l">'+esc(s.l)+'</div></div>';
+    }).join('') + '</div>';
+    studyInner.innerHTML =
+      '<div class="study-kind">'+esc(d.kind)+'</div>' +
+      '<h2 class="study-title">'+esc(d.title)+'</h2>' +
+      '<p class="study-lede">'+esc(d.lede)+'</p>' +
+      meta +
+      '<div class="study-shot">'+esc(d.title)+' — photography coming soon</div>' +
+      chapters +
+      stats +
+      '<div class="study-cta"><p>Want work like this?</p><a class="cta" href="#start">Start a project <span class="arr">→</span></a></div>';
+  }
+
+  function openStudy(slug){
+    var d = STUDIES[slug]; if(!d) return;
+    lastFocus = document.activeElement;
+    renderStudy(d);
+    study.style.setProperty('--accent2', d.accent);
+    study.setAttribute('aria-hidden','false');
+    document.documentElement.classList.add('study-open');
+    document.body.classList.add('study-open');
+    study.classList.add('open');
+    study.scrollTop = 0;
+    studyClose.focus();
+  }
+  function closeStudy(){
+    study.classList.remove('open');
+    study.setAttribute('aria-hidden','true');
+    document.documentElement.classList.remove('study-open');
+    document.body.classList.remove('study-open');
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  workItems.forEach(function(item){
+    item.addEventListener('click', function(){ openStudy(item.dataset.slug); });
+  });
+  if(studyClose) studyClose.addEventListener('click', closeStudy);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && study.classList.contains('open')) closeStudy();
+  });
+  // the in-study CTA jumps back to the page's start-a-project area
+  studyInner && studyInner.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="#"]');
+    if(a) closeStudy();
   });
 })();
 </script>
