@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preload" as="script" href="/vendor/lenis.min.js">
+<link rel="preload" as="script" href="/vendor/gsap.min.js">
+<link rel="preload" as="script" href="/vendor/ScrollTrigger.min.js">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -21,14 +25,6 @@
   html{
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
-    scroll-snap-type:y mandatory;
-    scroll-behavior:smooth;
-    scroll-padding-top:0;
-  }
-  /* On touch / small screens, full-page snapping fights the user — let it scroll freely */
-  @media (max-width:720px),(hover:none) and (pointer:coarse){
-    html{scroll-snap-type:none}
-    .panel{scroll-snap-align:none}
   }
   body{
     background:var(--ink);
@@ -36,6 +32,18 @@
     font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
     overflow-x:clip;
   }
+
+  /* ---- Lenis smooth scroll (required base styles) ---- */
+  html.lenis,html.lenis body{height:auto}
+  .lenis.lenis-smooth{scroll-behavior:auto!important}
+  .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+  .lenis.lenis-stopped{overflow:clip}
+
+  /* Hero bits start hidden ONLY when JS is on, so they never flash before the
+     intro timeline (and never stay hidden if the scripts fail to load).
+     Below-the-fold [data-reveal] elements are hidden by GSAP instead, so the
+     reveal can clearProps afterward and let CSS hover states work. */
+  .js .mark,.js .headline .line-in,.js .lede,.js .scroll-hint{opacity:0}
 
   /* ---- sticky bar ---- */
   header{
@@ -46,7 +54,7 @@
     display:flex;
     align-items:center;
     border-bottom:1px solid transparent;
-    transition:background .5s var(--ease),border-color .5s var(--ease),backdrop-filter .5s var(--ease);
+    transition:background .5s var(--ease),border-color .5s var(--ease);
     opacity:0;
     animation:rise .9s var(--ease) .15s forwards;
   }
@@ -124,10 +132,9 @@
   .nav-cta{padding:10px 20px;font-size:13px}
   @media(max-width:480px){.nav-cta{padding:9px 16px;font-size:12px}}
 
-  /* ---- panels (full-page, snap) ---- */
+  /* ---- panels (full-page) ---- */
   .panel{
     min-height:100svh;
-    scroll-snap-align:start;
     position:relative;
     display:flex;
     flex-direction:column;
@@ -144,9 +151,6 @@
   .mark{
     width:clamp(88px,14vw,156px);
     height:clamp(88px,14vw,156px);
-    opacity:0;
-    transform:scale(.82) rotate(-90deg);
-    animation:markIn 1.4s var(--ease) .35s forwards;
   }
   .mark svg{display:block;width:100%;height:100%}
   .mark .spin{transform-origin:50% 50%;animation:spin 60s linear infinite}
@@ -154,20 +158,18 @@
     font-size:clamp(34px,7vw,76px);
     font-weight:600;line-height:1.02;letter-spacing:-.022em;max-width:13ch;
   }
-  .headline span{display:block;color:var(--mute);font-weight:300}
+  /* line-mask reveal: each line clips its inner span which slides up */
+  .headline .line{display:block;overflow:hidden;padding-bottom:.04em}
+  .headline .line-in{display:block}
+  .headline .muted .line-in{color:var(--mute);font-weight:300}
   .lede{
     font-size:clamp(16px,2.1vw,20px);line-height:1.5;color:var(--mute);
     max-width:42ch;letter-spacing:-.01em;
   }
-  .headline,.lede,.hero .cta{opacity:0;animation:rise 1s var(--ease) forwards}
-  .headline{animation-delay:.6s}
-  .lede{animation-delay:.78s}
-  .hero .cta{animation-delay:.96s}
   .scroll-hint{
     position:absolute;bottom:clamp(20px,4vh,34px);left:0;right:0;
     display:flex;flex-direction:column;align-items:center;
     font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);
-    opacity:0;animation:rise 1s var(--ease) 1.3s forwards;
   }
   .scroll-hint span{padding-left:.2em} /* offset trailing letter-spacing so the word sits truly centered */
   .scroll-hint::after{content:"";width:1px;height:34px;margin-top:12px;background:linear-gradient(var(--mute),transparent);animation:drop 2.2s var(--ease) infinite}
@@ -186,9 +188,9 @@
 
   /* work */
   #work{overflow:hidden}
-  /* full-bleed colour wash that fades to the hovered project's accent */
-  .work-bg{position:absolute;inset:0;z-index:0;background:var(--accent,#000);opacity:0;transition:opacity .55s var(--ease),background-color .55s var(--ease);pointer-events:none}
-  #work.tint .work-bg{opacity:1}
+  /* full-bleed colour wash; opacity + colour are tweened by GSAP for smooth
+     card-to-card cross-fades (no paint-heavy CSS colour transition) */
+  .work-bg{position:absolute;inset:0;z-index:0;background:var(--accent,#000);opacity:0;pointer-events:none}
   #work .inner{position:relative;z-index:1}
 
   .work-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
@@ -217,18 +219,16 @@
   .work-item:hover .wgo,.work-item:focus-visible .wgo{opacity:1;transform:none}
   .work-item:focus-visible{outline:2px solid var(--paper);outline-offset:-2px}
 
-  /* custom "Open" cursor (desktop pointer only) */
+  /* custom "Open" cursor (desktop pointer only) — position + scale driven by
+     GSAP transforms (quickTo), so no left/top layout thrash */
   .cursor{
     position:fixed;top:0;left:0;z-index:70;pointer-events:none;
     width:88px;height:88px;border-radius:50%;
     display:flex;align-items:center;justify-content:center;
     background:var(--paper);color:var(--ink);
     font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
-    transform:translate(-50%,-50%) scale(0);
-    transition:transform .4s var(--ease),background .35s;
-    will-change:transform,left,top;
+    transform:scale(0);
   }
-  .cursor.show{transform:translate(-50%,-50%) scale(1)}
   .cursor .arrow{margin-left:.3em}
   body.cursor-active #work .work-item{cursor:none}
 
@@ -284,10 +284,10 @@
   .svc-row{
     display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(20px,5vw,72px);
     padding:clamp(20px,3.2vh,32px) 0;border-top:1px solid var(--line);align-items:start;
-    transition:padding-left .45s var(--ease);
+    transition:transform .45s var(--ease);
   }
   .svc-row:last-child{border-bottom:1px solid var(--line)}
-  .svc-row:hover{padding-left:14px}
+  .svc-row:hover{transform:translateX(14px)}
   .svc-row h3{font-size:clamp(20px,2.6vw,28px);font-weight:600;letter-spacing:-.01em}
   .svc-row p{font-size:15px;line-height:1.6;color:var(--mute);max-width:46ch}
   .svc-row .meta{margin-top:12px;font-size:12px;letter-spacing:.04em;color:var(--mute)}
@@ -299,10 +299,9 @@
   .proc-track{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,44px)}
   @media(max-width:760px){.proc-track{grid-template-columns:1fr 1fr;gap:36px 28px}}
   @media(max-width:480px){.proc-track{grid-template-columns:1fr}}
-  /* connector line that draws itself in when the section arrives */
+  /* connector line that draws itself in when the section arrives (GPU scaleX) */
   .proc-line{position:absolute;top:5px;left:0;right:0;height:1px;background:var(--line)}
-  .proc-line span{display:block;height:100%;width:0;background:var(--paper);transition:width 1.8s var(--ease) .2s}
-  .proc-track.in .proc-line span{width:100%}
+  .proc-line span{display:block;height:100%;width:100%;background:var(--paper);transform:scaleX(0);transform-origin:left}
   @media(max-width:760px){.proc-line{display:none}}
 
   .step{position:relative;padding-top:28px;cursor:default}
@@ -312,16 +311,18 @@
   .step .step-n{font-size:13px;letter-spacing:.18em;color:var(--mute);font-variant-numeric:tabular-nums}
   .step h3{margin:14px 0 10px;font-size:clamp(19px,2.1vw,24px);font-weight:600;letter-spacing:-.01em}
   .step .formal{font-size:14px;line-height:1.6;color:var(--mute)}
-  /* the playful "honest take" — folds open on hover / focus */
+  /* the playful "honest take" — folds open on hover / focus.
+     grid-template-rows 0fr->1fr animates height cleanly (no magic max-height) */
   .step .aside{
     font-size:13.5px;line-height:1.55;color:var(--paper);
-    max-height:0;opacity:0;overflow:hidden;transform:translateY(-4px);
-    transition:max-height .55s var(--ease),opacity .45s var(--ease),transform .45s var(--ease),margin-top .55s var(--ease);
+    display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;
+    transition:grid-template-rows .55s var(--ease),opacity .45s var(--ease),margin-top .55s var(--ease);
   }
+  .step .aside .aside-in{overflow:hidden;min-height:0}
   .step .aside em{font-style:normal;color:var(--mute);letter-spacing:.02em}
-  .step:hover .aside,.step:focus-within .aside{max-height:180px;opacity:1;transform:none;margin-top:14px}
+  .step:hover .aside,.step:focus-within .aside{grid-template-rows:1fr;opacity:1;margin-top:14px}
   /* no hover on touch — just show the asides */
-  @media(hover:none){.step .aside{max-height:none;opacity:1;transform:none;margin-top:14px}}
+  @media(hover:none){.step .aside{grid-template-rows:1fr;opacity:1;margin-top:14px}}
 
   /* ---- start / booking form ---- */
   /* this panel can be taller than the viewport, so flow the footer instead of
@@ -389,20 +390,16 @@
   .snd b{font-weight:600;color:var(--paper)}
   @media(max-width:560px){footer{flex-direction:column;gap:12px;align-items:flex-start}}
 
-  /* ---- scroll reveal ---- */
-  [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .85s var(--ease),transform .85s var(--ease);transition-delay:calc(var(--d,0)*75ms)}
-  [data-reveal].in{opacity:1;transform:none}
-
   /* ---- motion ---- */
   @keyframes rise{to{opacity:1;transform:none}}
-  @keyframes markIn{to{opacity:1;transform:scale(1) rotate(0)}}
   @keyframes spin{to{transform:rotate(360deg)}}
   @keyframes drop{0%{transform:scaleY(0);transform-origin:top}40%{transform:scaleY(1);transform-origin:top}41%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
   @media(prefers-reduced-motion:reduce){
-    html{scroll-snap-type:none;scroll-behavior:auto}
     *{animation:none!important;transition:none!important}
-    [data-reveal]{opacity:1!important;transform:none!important}
-    .mark,.headline,.lede,.hero .cta,header,.scroll-hint{opacity:1!important;transform:none!important}
+    /* reduced motion overrides the .js reveal-hide so all content is visible */
+    .js [data-reveal],.js .mark,.js .headline .line-in,.js .lede,.js .scroll-hint{opacity:1!important;transform:none!important}
+    .proc-line span{transform:scaleX(1)!important}
+    .cursor{display:none}
   }
 </style>
 </head>
@@ -432,7 +429,10 @@
             </g>
           </svg>
         </div>
-        <h1 class="headline">Brands that refuse<span>to blend in.</span></h1>
+        <h1 class="headline">
+          <span class="line"><span class="line-in">Brands that refuse</span></span>
+          <span class="line muted"><span class="line-in">to blend in.</span></span>
+        </h1>
         <p class="lede">A creative studio building maximal web, identity, and motion for restaurants and local makers who'd rather be unforgettable.</p>
         <!--<a class="cta" href="mailto:hello@neverday.com">Start a project <span class="arr">→</span></a>-->
       </div>
@@ -543,28 +543,28 @@
             <span class="step-n">01</span>
             <h3>Get to know you</h3>
             <p class="formal">We start with a long conversation — the story, the regulars, the thing you'd never put on the menu but everyone asks for.</p>
-            <p class="aside"><em>Between us —</em> we turn up with too many questions and leave with three pages of notes and a new favourite dish.</p>
+            <p class="aside"><span class="aside-in"><em>Between us —</em> we turn up with too many questions and leave with three pages of notes and a new favourite dish.</span></p>
           </div>
           <div class="step" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
             <span class="step-n">02</span>
             <h3>Find the angle</h3>
             <p class="formal">We come back with one sharp direction, argued for — not ten safe ones to average out into mush.</p>
-            <p class="aside"><em>Between us —</em> we fight about it for a week first, so you never have to sit through the bad ideas.</p>
+            <p class="aside"><span class="aside-in"><em>Between us —</em> we fight about it for a week first, so you never have to sit through the bad ideas.</span></p>
           </div>
           <div class="step" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
             <span class="step-n">03</span>
             <h3>Make it real</h3>
             <p class="formal">Design and build happen side by side, so what you sign off is what actually ships — in the browser, not a flat picture of one.</p>
-            <p class="aside"><em>Between us —</em> no "that's not what the mockup looked like." The mockup <i>was</i> the website.</p>
+            <p class="aside"><span class="aside-in"><em>Between us —</em> no "that's not what the mockup looked like." The mockup <i>was</i> the website.</span></p>
           </div>
           <div class="step" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
             <span class="step-n">04</span>
             <h3>Send it off</h3>
             <p class="formal">We launch, hand over the keys, and stay close through the first busy stretch while everything settles.</p>
-            <p class="aside"><em>Between us —</em> you will not get a goodbye Loom and a cheerful "good luck out there!"</p>
+            <p class="aside"><span class="aside-in"><em>Between us —</em> you will not get a goodbye Loom and a cheerful "good luck out there!"</span></p>
           </div>
         </div>
       </div>
@@ -669,33 +669,61 @@
     <div class="study-inner" id="studyInner"></div>
   </div>
 
+<!-- vendored animation stack (self-hosted) -->
+<script src="/vendor/lenis.min.js"></script>
+<script src="/vendor/gsap.min.js"></script>
+<script src="/vendor/ScrollTrigger.min.js"></script>
+
 <script>
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine   = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var hasGsap = typeof gsap !== 'undefined';
+  var hasLenis = typeof Lenis !== 'undefined';
+  var hasST   = hasGsap && typeof ScrollTrigger !== 'undefined';
+  if(hasST) gsap.registerPlugin(ScrollTrigger);
 
-  /* ---- sticky bar background on scroll ---- */
-  var bar = document.getElementById('bar');
-  var onScroll = function(){
-    if(window.scrollY > 12) bar.classList.add('scrolled');
-    else bar.classList.remove('scrolled');
-  };
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
 
-  /* ---- scroll reveal + active nav link ---- */
-  var navLinks = {};
-  document.querySelectorAll('.nlink').forEach(function(a){
-    navLinks[a.getAttribute('href').slice(1)] = a;
+  /* ---------- Lenis smooth scroll (bridged to GSAP ticker) ---------- */
+  var lenis = null;
+  if(hasLenis && !reduce){
+    lenis = new Lenis({ duration:1.05, smoothWheel:true, smoothTouch:false });
+    if(hasGsap){
+      lenis.on('scroll', function(){ if(hasST) ScrollTrigger.update(); });
+      gsap.ticker.add(function(time){ lenis.raf(time*1000); });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(0);
+    }
+  }
+
+  /* smooth in-page anchor links (through Lenis when available) */
+  function scrollToTarget(sel){
+    var el = document.querySelector(sel);
+    if(!el) return;
+    if(lenis) lenis.scrollTo(el, {offset:0});
+    else el.scrollIntoView({behavior: reduce ? 'auto' : 'smooth'});
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    var href = a.getAttribute('href');
+    if(href.length < 2) return;
+    a.addEventListener('click', function(e){
+      if(document.querySelector(href)){ e.preventDefault(); scrollToTarget(href); }
+    });
   });
 
-  if('IntersectionObserver' in window && !reduce){
-    var revealIO = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ e.target.classList.add('in'); revealIO.unobserve(e.target); }
-      });
-    }, {threshold:0.12});
-    document.querySelectorAll('[data-reveal]').forEach(function(el){ revealIO.observe(el); });
+  /* ---------- sticky bar background on scroll ---------- */
+  var bar = document.getElementById('bar');
+  function setBar(y){ if(y>12) bar.classList.add('scrolled'); else bar.classList.remove('scrolled'); }
+  if(lenis) lenis.on('scroll', function(e){ setBar(e.scroll||window.scrollY); });
+  else window.addEventListener('scroll', function(){ setBar(window.scrollY); }, {passive:true});
+  setBar(window.scrollY);
 
+  /* ---------- active nav link (IntersectionObserver) ---------- */
+  var navLinks = {};
+  document.querySelectorAll('.nlink').forEach(function(a){ navLinks[a.getAttribute('href').slice(1)] = a; });
+  if('IntersectionObserver' in window){
     var activeIO = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if(e.isIntersecting){
@@ -705,8 +733,105 @@
       });
     }, {threshold:0.5});
     document.querySelectorAll('.panel[id]').forEach(function(s){ activeIO.observe(s); });
+  }
+
+  /* ---------- count-up util (parses leading number, keeps prefix/suffix) ---------- */
+  function countUp(el){
+    if(!hasGsap) return;
+    var raw = el.getAttribute('data-val') || el.textContent;
+    var m = raw.match(/^(\D*)(\d[\d,\.]*)(.*)$/);
+    if(!m){ return; }                      // non-numeric → leave as-is
+    el.setAttribute('data-val', raw);
+    var pre = m[1], numStr = m[2], suf = m[3];
+    var dec = (numStr.split('.')[1] || '').length;
+    var target = parseFloat(numStr.replace(/,/g,''));
+    var o = {v:0};
+    el.textContent = pre + '0' + suf;
+    gsap.to(o, {v:target, duration:1.3, ease:'power2.out', onUpdate:function(){
+      el.textContent = pre + o.v.toFixed(dec) + suf;
+    }});
+  }
+
+  /* ---------- animations (GSAP) or instant fallback ---------- */
+  function revealInstant(){
+    document.querySelectorAll('.js [data-reveal], .mark, .headline .line-in, .lede, .scroll-hint')
+      .forEach(function(el){ el.style.opacity='1'; el.style.transform='none'; });
+    var pl = document.querySelector('.proc-line span'); if(pl) pl.style.transform='scaleX(1)';
+  }
+
+  if(hasGsap && !reduce){
+    /* hero intro timeline (hidden bits revealed cleanly, no FOUC) */
+    gsap.set('.mark', {scale:.82, rotation:-90, transformOrigin:'50% 50%'});
+    gsap.set('.headline .line-in', {yPercent:120});
+    gsap.set('.lede', {y:20});
+    gsap.set('.scroll-hint', {y:10});
+    var tl = gsap.timeline({defaults:{ease:'power4.out'}});
+    tl.to('.mark', {opacity:1, scale:1, rotation:0, duration:1.2})
+      .to('.headline .line-in', {opacity:1, yPercent:0, duration:.9, stagger:.12}, '-=0.75')
+      .to('.lede', {opacity:1, y:0, duration:.8}, '-=0.5')
+      .to('.scroll-hint', {opacity:1, y:0, duration:.8}, '-=0.4');
+
+    if(hasST){
+      /* staggered reveals — batch handles items already in view on load
+         (e.g. landing mid-page via a #hash) and groups items that enter together */
+      gsap.set('[data-reveal]', {opacity:0, y:24});
+      ScrollTrigger.batch('[data-reveal]', {
+        start:'top 85%',
+        onEnter:function(batch){
+          gsap.to(batch, {opacity:1, y:0, duration:.85, ease:'power3.out', stagger:.08,
+            overwrite:true, clearProps:'opacity,transform'});  // hand back to CSS so hover dim works
+        }
+      });
+
+      /* process connector line draws in + dots pop */
+      var procLine = document.querySelector('.proc-line span');
+      if(procLine){
+        gsap.to(procLine, {scaleX:1, duration:1.4, ease:'power3.out',
+          scrollTrigger:{trigger:'#process', start:'top 70%', once:true}});
+      }
+      if(document.querySelector('#process .dot')){
+        gsap.from('#process .dot', {scale:0, transformOrigin:'50% 50%', duration:.5, stagger:.12,
+          ease:'back.out(2)', clearProps:'transform',
+          scrollTrigger:{trigger:'#process', start:'top 70%', once:true}});
+      }
+
+      /* count-up the About stats when they arrive */
+      var aboutPanel = document.getElementById('about');
+      if(aboutPanel){
+        ScrollTrigger.create({trigger:aboutPanel, start:'top 65%', once:true, onEnter:function(){
+          aboutPanel.querySelectorAll('.stat .n').forEach(countUp);
+        }});
+      }
+
+      ScrollTrigger.refresh();
+      buildSnap();
+    }
   } else {
-    document.querySelectorAll('[data-reveal]').forEach(function(el){ el.classList.add('in'); });
+    revealInstant();
+  }
+
+  /* ---------- gentle section snap (desktop pointer, via Lenis) ---------- */
+  function buildSnap(){
+    if(!fine || !lenis) return;
+    var snapTimer, snapping=false, safety;
+    lenis.on('scroll', function(){
+      if(snapping) return;
+      clearTimeout(snapTimer);
+      snapTimer = setTimeout(doSnap, 140);
+    });
+    function doSnap(){
+      var cur = window.scrollY, vh = window.innerHeight, best=null, bestD=Infinity;
+      panels.forEach(function(p){
+        var top = p.getBoundingClientRect().top + window.scrollY;
+        var d = Math.abs(top - cur);
+        if(d < bestD){ bestD = d; best = top; }
+      });
+      if(best!==null && bestD > 4 && bestD < vh*0.4){
+        snapping = true;
+        clearTimeout(safety); safety = setTimeout(function(){ snapping=false; }, 900);
+        lenis.scrollTo(best, {duration:0.7, onComplete:function(){ snapping=false; clearTimeout(safety); }});
+      }
+    }
   }
 
   /* ---- satisfying hover click sound (Web Audio, no assets) ---- */
@@ -814,37 +939,42 @@
   var workItems = Array.prototype.slice.call(document.querySelectorAll('.work-item'));
   var fine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
-  /* accent wash following the hovered project */
+  /* accent wash following the hovered project (GSAP cross-fade) */
   workItems.forEach(function(item){
     item.addEventListener('pointerenter', function(){
       if(!workBg) return;
-      workBg.style.background = item.dataset.accent;
+      var accent = item.dataset.accent;
       workSection.classList.add('tint');
+      if(hasGsap && !reduce){
+        gsap.to(workBg, {backgroundColor:accent, opacity:1, duration:.5, ease:'power2.out', overwrite:true});
+      } else {
+        workBg.style.background = accent; workBg.style.opacity = '1';
+      }
     });
   });
   if(workGrid){
     workGrid.addEventListener('pointerleave', function(){
       workSection.classList.remove('tint');
+      if(hasGsap && !reduce){ gsap.to(workBg, {opacity:0, duration:.5, ease:'power2.out', overwrite:true}); }
+      else if(workBg){ workBg.style.opacity = '0'; }
     });
   }
 
-  /* custom "Open" cursor — lerped for a smooth trail */
+  /* custom "Open" cursor — GSAP quickTo on transforms (no rAF leak, no layout) */
   var cursor = document.getElementById('cursor');
-  if(cursor && fine && !reduce){
-    var cx = innerWidth/2, cy = innerHeight/2, tx = cx, ty = cy, raf;
-    function loop(){
-      cx += (tx-cx)*0.18; cy += (ty-cy)*0.18;
-      cursor.style.left = cx+'px'; cursor.style.top = cy+'px';
-      raf = requestAnimationFrame(loop);
-    }
-    window.addEventListener('pointermove', function(e){ tx = e.clientX; ty = e.clientY; }, {passive:true});
+  if(cursor && fine && !reduce && hasGsap){
+    gsap.set(cursor, {xPercent:-50, yPercent:-50, scale:0});
+    var xTo = gsap.quickTo(cursor, 'x', {duration:.4, ease:'power3'});
+    var yTo = gsap.quickTo(cursor, 'y', {duration:.4, ease:'power3'});
+    window.addEventListener('pointermove', function(e){ xTo(e.clientX); yTo(e.clientY); }, {passive:true});
     workItems.forEach(function(item){
       item.addEventListener('pointerenter', function(){
-        cursor.classList.add('show'); document.body.classList.add('cursor-active');
-        if(!raf) raf = requestAnimationFrame(loop);
+        document.body.classList.add('cursor-active');
+        gsap.to(cursor, {scale:1, duration:.4, ease:'power3.out'});
       });
       item.addEventListener('pointerleave', function(){
-        cursor.classList.remove('show'); document.body.classList.remove('cursor-active');
+        document.body.classList.remove('cursor-active');
+        gsap.to(cursor, {scale:0, duration:.35, ease:'power3.in'});
       });
     });
   }
@@ -891,6 +1021,8 @@
     document.body.classList.add('study-open');
     study.classList.add('open');
     study.scrollTop = 0;
+    if(lenis) lenis.stop();
+    if(hasGsap && !reduce){ studyInner.querySelectorAll('.study-stats .n').forEach(countUp); }
     studyClose.focus();
   }
   function closeStudy(){
@@ -898,6 +1030,7 @@
     study.setAttribute('aria-hidden','true');
     document.documentElement.classList.remove('study-open');
     document.body.classList.remove('study-open');
+    if(lenis) lenis.start();
     if(lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
@@ -911,7 +1044,11 @@
   // the in-study CTA jumps back to the page's start-a-project area
   studyInner && studyInner.addEventListener('click', function(e){
     var a = e.target.closest('a[href^="#"]');
-    if(a) closeStudy();
+    if(!a) return;
+    e.preventDefault();
+    var href = a.getAttribute('href');
+    closeStudy();
+    setTimeout(function(){ scrollToTarget(href); }, 60);
   });
 
   /* ======================================================================
