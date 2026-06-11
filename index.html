@@ -340,8 +340,8 @@
   .step-fx svg{display:block;width:100%;height:100%;overflow:visible}
   /* 01/02/03 sit on the timeline near the dot and persist after playing once */
   .fx-people{top:-50px;left:-2px;width:96px;height:60px;opacity:0}
-  .fx-gears{top:-30px;left:-14px;width:60px;height:60px;opacity:0}
-  .fx-flower{top:-46px;left:2px;width:42px;height:56px;opacity:0}
+  .fx-gears{top:-46px;left:-14px;width:60px;height:60px;opacity:0}
+  .fx-flower{top:-49px;left:-28px;width:126px;height:68px;opacity:0}
   /* 04 keeps flying off the top-right on every hover */
   .fx-money{top:2px;right:10px;width:0;height:0}
   .fx-money .plane-svg{position:absolute;top:0;right:0;width:52px;height:52px;opacity:0;overflow:visible}
@@ -600,23 +600,21 @@
             <p class="aside"><span class="aside-in"><em>Between us —</em> we fight about it for a week first, so you never have to sit through the bad ideas.</span></p>
             <span class="step-fx fx-gears" aria-hidden="true">
               <svg viewBox="0 0 60 60">
-                <g class="gearA">
-                  <circle cx="14" cy="42" r="10" fill="none" stroke="#9A9A96" stroke-width="5" stroke-dasharray="3.2 3.4"/>
-                  <circle cx="14" cy="42" r="6.5" fill="#2B2B29"/>
-                  <circle cx="14" cy="42" r="2" fill="#0A0A0A"/>
-                </g>
-                <g class="gearB">
-                  <circle cx="46" cy="18" r="9" fill="none" stroke="#9A9A96" stroke-width="4.5" stroke-dasharray="3 3.2"/>
-                  <circle cx="46" cy="18" r="5.8" fill="#2B2B29"/>
-                  <circle cx="46" cy="18" r="1.8" fill="#0A0A0A"/>
-                </g>
-                <g class="aster" fill="#FAFAF8">
-                  <g transform="translate(30 30)">
-                    <rect x="-3" y="-15" width="6" height="30" rx="1.5" transform="rotate(30)"/>
-                    <rect x="-3" y="-15" width="6" height="30" rx="1.5" transform="rotate(-30)"/>
-                    <rect x="-15" y="-3" width="30" height="6" rx="1.5"/>
-                  </g>
-                </g>
+                <g class="gearA" fill="#BFBFBB"><g transform="translate(15 42)">
+                  <rect x="-2.5" y="-11" width="5" height="22" rx="1.6" transform="rotate(30)"/>
+                  <rect x="-2.5" y="-11" width="5" height="22" rx="1.6" transform="rotate(-30)"/>
+                  <rect x="-11" y="-2.5" width="22" height="5" rx="1.6"/>
+                </g></g>
+                <g class="gearB" fill="#97978F"><g transform="translate(45 17)">
+                  <rect x="-2.25" y="-9" width="4.5" height="18" rx="1.5" transform="rotate(30)"/>
+                  <rect x="-2.25" y="-9" width="4.5" height="18" rx="1.5" transform="rotate(-30)"/>
+                  <rect x="-9" y="-2.25" width="18" height="4.5" rx="1.5"/>
+                </g></g>
+                <g class="aster" fill="#FAFAF8"><g transform="translate(30 29)">
+                  <rect x="-3" y="-15" width="6" height="30" rx="1.5" transform="rotate(30)"/>
+                  <rect x="-3" y="-15" width="6" height="30" rx="1.5" transform="rotate(-30)"/>
+                  <rect x="-15" y="-3" width="30" height="6" rx="1.5"/>
+                </g></g>
               </svg>
             </span>
           </div>
@@ -627,18 +625,43 @@
             <p class="formal">Design and build happen side by side, so what you sign off is what actually ships — in the browser, not a flat picture of one.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> no "that's not what the mockup looked like." The mockup <i>was</i> the website.</span></p>
             <span class="step-fx fx-flower" aria-hidden="true">
-              <svg viewBox="0 0 44 60">
-                <path class="stem" d="M22 58 C 19 46, 25 34, 22 24" stroke="#2E8B57" stroke-width="3" fill="none" stroke-linecap="round"/>
-                <path class="leaf leafL" d="M22 45 C 11 41, 9 34, 16 33 C 20 33.5, 22 40, 22 45 Z" fill="#34A65A"/>
-                <path class="leaf leafR" d="M22 38 C 33 35, 35 28, 28 27 C 24 27.5, 22 33, 22 38 Z" fill="#3FBF63"/>
-                <g class="bloom">
-                  <g transform="translate(22 18)" fill="#FF5C8A">
-                    <rect x="-2.5" y="-11" width="5" height="22" rx="2.5" transform="rotate(30)"/>
-                    <rect x="-2.5" y="-11" width="5" height="22" rx="2.5" transform="rotate(-30)"/>
-                    <rect x="-11" y="-2.5" width="22" height="5" rx="2.5"/>
-                  </g>
-                  <circle cx="22" cy="18" r="3" fill="#FFD60A"/>
-                </g>
+              <svg viewBox="0 0 130 70">
+                <path class="hill" d="M-15 72 Q 35 50 80 60 T 150 56 L150 72 Z" fill="#16301F"/>
+                <path class="hill" d="M-15 72 Q 55 58 100 64 T 165 60 L165 72 Z" fill="#1F4329"/>
+                <!-- medium flower (left) -->
+                <path class="stem" d="M34 60 C 32 49, 36 37, 34 31" stroke="#2E8B57" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+                <g class="bloom"><g transform="translate(34 29)" fill="#FF9F0A">
+                  <rect x="-2" y="-8" width="4" height="16" rx="2" transform="rotate(30)"/>
+                  <rect x="-2" y="-8" width="4" height="16" rx="2" transform="rotate(-30)"/>
+                  <rect x="-8" y="-2" width="16" height="4" rx="2"/>
+                  <circle r="2.3" fill="#FFE08A"/>
+                </g></g>
+                <!-- big flower (centre) -->
+                <path class="stem" d="M64 60 C 61 47, 67 33, 64 23" stroke="#2E8B57" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path class="leaf" d="M64 47 C 54 43, 52 36, 59 35 C 63 35.5, 64 42, 64 47 Z" fill="#34A65A"/>
+                <path class="leaf" d="M64 40 C 74 37, 76 30, 69 29 C 65 29.5, 64 35, 64 40 Z" fill="#3FBF63"/>
+                <g class="bloom"><g transform="translate(64 20)" fill="#FF5C8A">
+                  <rect x="-2.5" y="-11" width="5" height="22" rx="2.5" transform="rotate(30)"/>
+                  <rect x="-2.5" y="-11" width="5" height="22" rx="2.5" transform="rotate(-30)"/>
+                  <rect x="-11" y="-2.5" width="22" height="5" rx="2.5"/>
+                  <circle r="3" fill="#FFD60A"/>
+                </g></g>
+                <!-- small flower (right) -->
+                <path class="stem" d="M96 60 C 94 51, 98 39, 96 33" stroke="#2E8B57" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                <g class="bloom"><g transform="translate(96 31)" fill="#FFD60A">
+                  <rect x="-1.75" y="-6.5" width="3.5" height="13" rx="1.75" transform="rotate(30)"/>
+                  <rect x="-1.75" y="-6.5" width="3.5" height="13" rx="1.75" transform="rotate(-30)"/>
+                  <rect x="-6.5" y="-1.75" width="13" height="3.5" rx="1.75"/>
+                  <circle r="2" fill="#FF9F0A"/>
+                </g></g>
+                <!-- tiny bud (far right) -->
+                <path class="stem" d="M114 60 C 113 54, 115 47, 114 43" stroke="#2E8B57" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <g class="bloom"><g transform="translate(114 41)" fill="#BF5AF2">
+                  <rect x="-1.4" y="-5" width="2.8" height="10" rx="1.4" transform="rotate(30)"/>
+                  <rect x="-1.4" y="-5" width="2.8" height="10" rx="1.4" transform="rotate(-30)"/>
+                  <rect x="-5" y="-1.4" width="10" height="2.8" rx="1.4"/>
+                  <circle r="1.6" fill="#FFD60A"/>
+                </g></g>
               </svg>
             </span>
           </div>
@@ -1044,27 +1067,32 @@
       gsap.set(fx, {opacity:0, scale:.55, transformBox:'fill-box', transformOrigin:'50% 50%'});
       var tl = gsap.timeline();
       tl.to(fx, {opacity:1, scale:1, duration:.5, ease:'back.out(2)'}, 0);
-      gsap.to(gA, {rotation:360, svgOrigin:'14 42', duration:4.2, ease:'none', repeat:-1});
-      gsap.to(gB, {rotation:-360, svgOrigin:'46 18', duration:3.2, ease:'none', repeat:-1});
-      gsap.to(as, {rotation:360, svgOrigin:'30 30', duration:6, ease:'none', repeat:-1});
+      // meshed: the big centre asterisk turns one way, the two it drives turn the other
+      gsap.to(as, {rotation:360,  svgOrigin:'30 29', duration:6.5, ease:'none', repeat:-1});
+      gsap.to(gA, {rotation:-360, svgOrigin:'15 42', duration:4.6, ease:'none', repeat:-1});
+      gsap.to(gB, {rotation:-360, svgOrigin:'45 17', duration:3.8, ease:'none', repeat:-1});
       return tl;
     }
-    // 03 — make it real: a flower grows from the line, blooming into the asterisk
+    // 03 — make it real: a little garden grows from the line (hills + flowers)
     function buildFlower(step){
       var fx = step.querySelector('.fx-flower');
-      var stem = fx.querySelector('.stem'), leaves = fx.querySelectorAll('.leaf'), bloom = fx.querySelector('.bloom');
-      var len = stem.getTotalLength();
+      var hills = fx.querySelectorAll('.hill');
+      var stems = fx.querySelectorAll('.stem');
+      var leaves = fx.querySelectorAll('.leaf');
+      var blooms = fx.querySelectorAll('.bloom');
       gsap.set(fx, {opacity:1});
-      gsap.set(stem, {strokeDasharray:len, strokeDashoffset:len});
+      gsap.set(hills, {yPercent:70, opacity:0, transformBox:'fill-box', transformOrigin:'50% 100%'});
+      stems.forEach(function(s){ var len = s.getTotalLength(); gsap.set(s, {strokeDasharray:len, strokeDashoffset:len}); });
       gsap.set(leaves, {scale:0, opacity:0, transformBox:'fill-box', transformOrigin:'50% 100%'});
-      gsap.set(bloom, {scale:0, opacity:0, svgOrigin:'22 18'});
+      gsap.set(blooms, {scale:0, opacity:0, transformBox:'fill-box', transformOrigin:'50% 50%'});
       var tl = gsap.timeline();
-      tl.to(stem, {strokeDashoffset:0, duration:.8, ease:'power2.out'}, 0)
-        .to(leaves, {scale:1, opacity:1, duration:.4, stagger:.12, ease:'back.out(2)'}, .35)
-        .to(bloom, {scale:1, opacity:1, duration:.6, ease:'back.out(1.8)'}, .65)
-        .to(bloom, {rotation:180, svgOrigin:'22 18', duration:.7, ease:'power1.out'}, .65)
-        .add(function(){   // stays bloomed, with a gentle sway
-          gsap.to(fx, {rotation:3, transformBox:'fill-box', transformOrigin:'50% 100%', duration:2.2, ease:'sine.inOut', yoyo:true, repeat:-1});
+      tl.to(hills, {yPercent:0, opacity:1, duration:.7, stagger:.1, ease:'power3.out'}, 0)
+        .to(stems, {strokeDashoffset:0, duration:.7, stagger:.12, ease:'power2.out'}, .2)
+        .to(leaves, {scale:1, opacity:1, duration:.35, stagger:.08, ease:'back.out(2)'}, .55)
+        .to(blooms, {scale:1, opacity:1, duration:.55, stagger:.12, ease:'back.out(1.9)'}, .6)
+        .add(function(){   // the garden stays; blooms turn slowly and the whole bed sways
+          blooms.forEach(function(b,i){ gsap.to(b, {rotation:'+=360', transformBox:'fill-box', transformOrigin:'50% 50%', duration:9+i*2, ease:'none', repeat:-1}); });
+          gsap.to(fx, {rotation:1.8, transformBox:'fill-box', transformOrigin:'50% 100%', duration:2.6, ease:'sine.inOut', yoyo:true, repeat:-1});
         });
       return tl;
     }
