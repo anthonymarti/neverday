@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta name="description" content="Privacy Policy for Neverday, a creative studio in Kansas City.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Privacy Policy — neverday</title>
+<style>
+  :root{
+    --ink:#0A0A0A;
+    --paper:#FAFAF8;
+    --mute:#8A8A86;
+    --line:rgba(255,255,255,0.10);
+    --ease:cubic-bezier(.16,1,.3,1);
+    --bar:72px;
+    --maxw:820px;
+    --gutter:clamp(24px,6vw,72px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    overflow-x:clip;
+    line-height:1.6;
+  }
+  .wrap{width:100%;max-width:calc(var(--maxw) + 2 * var(--gutter));margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
+
+  /* ---- sticky bar (matches home) ---- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;height:var(--bar);
+    display:flex;align-items:center;
+    background:rgba(10,10,10,.62);
+    backdrop-filter:saturate(140%) blur(14px);
+    -webkit-backdrop-filter:saturate(140%) blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .wordmark{font-size:22px;font-weight:600;letter-spacing:-.01em;text-decoration:none;color:var(--paper)}
+  .back{
+    display:inline-flex;align-items:center;gap:.5em;
+    font-size:13px;font-weight:500;letter-spacing:.01em;color:var(--mute);
+    text-decoration:none;transition:color .3s var(--ease);
+  }
+  .back .arr{transition:transform .4s var(--ease)}
+  .back:hover{color:var(--paper)}
+  .back:hover .arr{transform:translateX(-4px)}
+  .back:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
+
+  /* ---- document ---- */
+  main{padding:calc(var(--bar) + clamp(48px,10vh,110px)) 0 clamp(64px,12vh,120px)}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+  h1{
+    margin:18px 0 0;font-size:clamp(34px,6vw,60px);font-weight:600;
+    letter-spacing:-.025em;line-height:1.04;
+  }
+  .updated{margin-top:18px;font-size:14px;color:var(--mute)}
+  .lede{
+    margin-top:clamp(28px,4vh,40px);padding-bottom:clamp(28px,4vh,40px);
+    border-bottom:1px solid var(--line);
+    font-size:clamp(17px,2.2vw,21px);line-height:1.5;font-weight:300;color:var(--paper);
+  }
+
+  section{margin-top:clamp(36px,5vh,56px)}
+  h2{
+    font-size:clamp(20px,2.6vw,26px);font-weight:600;letter-spacing:-.012em;
+    display:flex;align-items:baseline;gap:14px;
+  }
+  h2 .n{font-size:12px;letter-spacing:.16em;color:var(--mute);font-variant-numeric:tabular-nums;font-weight:500}
+  h3{margin-top:22px;font-size:16px;font-weight:600;letter-spacing:-.005em}
+  p{margin-top:14px;font-size:16px;line-height:1.65;color:var(--mute)}
+  p strong,li strong{color:var(--paper);font-weight:600}
+  ul{margin:14px 0 0;padding-left:0;list-style:none}
+  li{position:relative;margin-top:10px;padding-left:22px;font-size:16px;line-height:1.6;color:var(--mute)}
+  li::before{content:"";position:absolute;left:2px;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--mute)}
+  a.inline{color:var(--paper);text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .3s var(--ease)}
+  a.inline:hover{border-color:var(--paper)}
+  a.inline:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+
+  /* ---- footer (matches home) ---- */
+  footer{
+    border-top:1px solid var(--line);
+    margin-top:clamp(56px,9vh,96px);padding-top:clamp(28px,4vh,40px);
+    display:flex;align-items:center;justify-content:space-between;gap:18px;
+    font-size:13px;letter-spacing:.04em;color:var(--mute);
+  }
+  footer a{color:var(--mute);text-decoration:none;transition:color .3s}
+  footer a:hover{color:var(--paper)}
+  footer a:focus-visible{outline:2px solid var(--paper);outline-offset:3px;color:var(--paper)}
+  .links{display:flex;gap:24px;align-items:center}
+  @media(max-width:560px){footer{flex-direction:column;gap:12px;align-items:flex-start}}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap bar">
+      <a class="wordmark" href="/">neverday</a>
+      <a class="back" href="/"><span class="arr">←</span> Back to site</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <span class="eyebrow">Neverday · Legal</span>
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: June 11, 2026</p>
+
+      <p class="lede">
+        Neverday is a small creative studio based in Kansas City. We collect as little as we can, we
+        never sell your information, and we only ask for what we need to talk to you about a project.
+        This page explains exactly what that means.
+      </p>
+
+      <section>
+        <h2><span class="n">01</span> Who we are</h2>
+        <p>
+          In this policy, "Neverday," "we," "us," and "our" refer to Neverday, a creative studio operating
+          out of Kansas City. This policy applies to this website and any project inquiries you send us
+          through it. If you have questions about anything here, email us at
+          <a class="inline" href="mailto:hello@neverday.com">hello@neverday.com</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="n">02</span> Information we collect</h2>
+        <p>
+          We only collect personal information that you choose to give us. The main way that happens is the
+          <strong>"Start a project" form</strong> on our home page. When you fill it out, you may share:
+        </p>
+        <ul>
+          <li>Your <strong>name</strong> and <strong>email address</strong></li>
+          <li>Your <strong>business or brand name</strong></li>
+          <li>What you're looking for — the <strong>services, budget, and timeline</strong> you select</li>
+          <li>The <strong>project details</strong> you write, and how you heard about us</li>
+        </ul>
+        <p>
+          The form works by opening your own email app with these details pre-filled — nothing is submitted
+          to a database on this site. The information reaches us only when <strong>you press send</strong> in
+          your email client. You can also reach us directly at
+          <a class="inline" href="mailto:hello@neverday.com">hello@neverday.com</a>.
+        </p>
+        <h3>Information collected automatically</h3>
+        <p>
+          Like most websites, our host may automatically log basic technical information when you visit —
+          such as your IP address, browser type, device, and the pages you view. This is standard server
+          logging used to keep the site secure and running. We do not use advertising trackers, and the
+          site does not set marketing or analytics cookies.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="n">03</span> How we use your information</h2>
+        <p>We use the information you send us to:</p>
+        <ul>
+          <li>Respond to your inquiry and discuss a potential project</li>
+          <li>Prepare proposals, estimates, and scopes of work</li>
+          <li>Carry out and communicate about work you hire us to do</li>
+          <li>Keep records of our correspondence and agreements</li>
+        </ul>
+        <p>
+          We will not use your contact details to send you marketing you didn't ask for, and we will never
+          sell or rent your personal information to anyone.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="n">04</span> How your information is shared</h2>
+        <p>
+          We keep your information to ourselves. We only share it in a few limited situations:
+        </p>
+        <ul>
+          <li><strong>Service providers</strong> we rely on to operate — for example, our website host and our email provider — who process information on our behalf.</li>
+          <li><strong>Legal reasons</strong>, if we're required to by law or to protect our rights, safety, or property.</li>
+          <li><strong>A business transfer</strong>, such as if the studio is ever merged with or acquired by another company.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2><span class="n">05</span> Hosting and third parties</h2>
+        <p>
+          This site is hosted on <strong>Vercel</strong>, which processes requests and may keep standard
+          server logs on our behalf. Communication you send through the form travels through your own email
+          provider and is received by our email provider. These companies handle data under their own privacy
+          terms. We use self-hosted animation libraries on this site and do not embed third-party advertising
+          or social-media tracking scripts.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="n">06</span> Cookies</h2>
+        <p>
+          This website does not use cookies for advertising or analytics. Our host may use strictly necessary
+          cookies to deliver and secure the site. If we add analytics or other cookies in the future, we'll
+          update this policy first.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="n">07</span> How long we keep it</h2>
+        <p>
+          We keep project inquiries and correspondence for as long as we need them to respond to you, carry
+          out work, and meet our legal and accounting obligations. When information is no longer needed, we
+          delete it or keep it only in archived form. You can ask us to delete your information at any time.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="n">08</span> Your choices and rights</h2>
+        <p>
+          Depending on where you live, you may have the right to access, correct, or delete the personal
+          information we hold about you, and to ask us to stop using it. To make any of these requests, just
+          email <a class="inline" href="mailto:hello@neverday.com">hello@neverday.com</a> and we'll take care
+          of it. We won't charge you or treat you differently for exercising these rights.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="n">09</span> Children's privacy</h2>
+        <p>
+          This site and our services are meant for businesses and adults. We don't knowingly collect personal
+          information from children under 13. If you believe a child has sent us information, contact us and
+          we'll delete it.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="n">10</span> Changes to this policy</h2>
+        <p>
+          We may update this policy from time to time as our studio and the site evolve. When we do, we'll
+          revise the "Last updated" date at the top of this page. Significant changes will be reflected here,
+          so it's worth checking back occasionally.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="n">11</span> Contact us</h2>
+        <p>
+          Questions, requests, or anything about your privacy? Email us at
+          <a class="inline" href="mailto:hello@neverday.com">hello@neverday.com</a> — a real person will get
+          back to you.
+        </p>
+      </section>
+    </div>
+
+    <div class="wrap">
+      <footer>
+        <div>© 2026 Neverday</div>
+        <div class="links">
+          <a href="/">Home</a>
+          <a href="mailto:hello@neverday.com">hello@neverday.com</a>
+          <a href="https://instagram.com/neverdaystudio">Instagram</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>
