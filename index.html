@@ -317,7 +317,7 @@
 
   .step{position:relative;padding-top:28px;cursor:default}
   .step:focus-visible{outline:2px solid var(--paper);outline-offset:8px;border-radius:4px}
-  .step .dot{position:absolute;top:0;left:0;width:11px;height:11px;border-radius:50%;background:var(--ink);border:1px solid var(--mute);transition:background .4s var(--ease),border-color .4s var(--ease),transform .4s var(--ease)}
+  .step .dot{position:absolute;top:0;left:0;z-index:4;width:11px;height:11px;border-radius:50%;background:var(--ink);border:1px solid var(--mute);transition:background .4s var(--ease),border-color .4s var(--ease),transform .4s var(--ease)}
   .step:hover .dot,.step:focus-within .dot{background:var(--paper);border-color:var(--paper);transform:scale(1.3)}
   .step .step-n{font-size:13px;letter-spacing:.18em;color:var(--mute);font-variant-numeric:tabular-nums}
   .step h3{margin:14px 0 10px;font-size:clamp(19px,2.1vw,24px);font-weight:600;letter-spacing:-.01em}
@@ -341,7 +341,7 @@
   /* 01/02/03 sit on the timeline near the dot and persist after playing once */
   .fx-people{top:-50px;left:-2px;width:96px;height:60px;opacity:0}
   .fx-gears{top:-46px;left:-14px;width:60px;height:60px;opacity:0}
-  .fx-flower{top:-49px;left:-28px;width:126px;height:68px;opacity:0}
+  .fx-flower{top:-45px;left:-24px;width:126px;height:60px;opacity:0}
   /* 04 keeps flying off the top-right on every hover */
   .fx-money{top:2px;right:10px;width:0;height:0}
   .fx-money .plane-svg{position:absolute;top:0;right:0;width:52px;height:52px;opacity:0;overflow:visible}
@@ -625,38 +625,38 @@
             <p class="formal">Design and build happen side by side, so what you sign off is what actually ships — in the browser, not a flat picture of one.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> no "that's not what the mockup looked like." The mockup <i>was</i> the website.</span></p>
             <span class="step-fx fx-flower" aria-hidden="true">
-              <svg viewBox="0 0 130 70">
-                <path class="hill" d="M-15 72 Q 35 50 80 60 T 150 56 L150 72 Z" fill="#16301F"/>
-                <path class="hill" d="M-15 72 Q 55 58 100 64 T 165 60 L165 72 Z" fill="#1F4329"/>
+              <svg viewBox="0 0 130 62">
+                <path class="hill" d="M-15 62 Q 38 46 82 53 T 150 50 L150 62 Z" fill="#16301F"/>
+                <path class="hill" d="M-15 62 Q 58 52 102 56 T 165 53 L165 62 Z" fill="#1F4329"/>
                 <!-- medium flower (left) -->
-                <path class="stem" d="M34 60 C 32 49, 36 37, 34 31" stroke="#2E8B57" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-                <g class="bloom"><g transform="translate(34 29)" fill="#FF9F0A">
+                <path class="stem" d="M34 53 C 32 44, 36 33, 34 27" stroke="#2E8B57" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+                <g class="bloom"><g transform="translate(34 24)" fill="#FF9F0A">
                   <rect x="-2" y="-8" width="4" height="16" rx="2" transform="rotate(30)"/>
                   <rect x="-2" y="-8" width="4" height="16" rx="2" transform="rotate(-30)"/>
                   <rect x="-8" y="-2" width="16" height="4" rx="2"/>
                   <circle r="2.3" fill="#FFE08A"/>
                 </g></g>
                 <!-- big flower (centre) -->
-                <path class="stem" d="M64 60 C 61 47, 67 33, 64 23" stroke="#2E8B57" stroke-width="3" fill="none" stroke-linecap="round"/>
-                <path class="leaf" d="M64 47 C 54 43, 52 36, 59 35 C 63 35.5, 64 42, 64 47 Z" fill="#34A65A"/>
-                <path class="leaf" d="M64 40 C 74 37, 76 30, 69 29 C 65 29.5, 64 35, 64 40 Z" fill="#3FBF63"/>
-                <g class="bloom"><g transform="translate(64 20)" fill="#FF5C8A">
+                <path class="stem" d="M64 53 C 61 41, 67 28, 64 19" stroke="#2E8B57" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path class="leaf" d="M64 42 C 54 38, 52 31, 59 30 C 63 30.5, 64 37, 64 42 Z" fill="#34A65A"/>
+                <path class="leaf" d="M64 35 C 74 32, 76 25, 69 24 C 65 24.5, 64 30, 64 35 Z" fill="#3FBF63"/>
+                <g class="bloom"><g transform="translate(64 16)" fill="#FF5C8A">
                   <rect x="-2.5" y="-11" width="5" height="22" rx="2.5" transform="rotate(30)"/>
                   <rect x="-2.5" y="-11" width="5" height="22" rx="2.5" transform="rotate(-30)"/>
                   <rect x="-11" y="-2.5" width="22" height="5" rx="2.5"/>
                   <circle r="3" fill="#FFD60A"/>
                 </g></g>
                 <!-- small flower (right) -->
-                <path class="stem" d="M96 60 C 94 51, 98 39, 96 33" stroke="#2E8B57" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-                <g class="bloom"><g transform="translate(96 31)" fill="#FFD60A">
+                <path class="stem" d="M96 53 C 94 45, 98 34, 96 28" stroke="#2E8B57" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                <g class="bloom"><g transform="translate(96 26)" fill="#FFD60A">
                   <rect x="-1.75" y="-6.5" width="3.5" height="13" rx="1.75" transform="rotate(30)"/>
                   <rect x="-1.75" y="-6.5" width="3.5" height="13" rx="1.75" transform="rotate(-30)"/>
                   <rect x="-6.5" y="-1.75" width="13" height="3.5" rx="1.75"/>
                   <circle r="2" fill="#FF9F0A"/>
                 </g></g>
                 <!-- tiny bud (far right) -->
-                <path class="stem" d="M114 60 C 113 54, 115 47, 114 43" stroke="#2E8B57" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                <g class="bloom"><g transform="translate(114 41)" fill="#BF5AF2">
+                <path class="stem" d="M114 53 C 113 47, 115 40, 114 36" stroke="#2E8B57" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <g class="bloom"><g transform="translate(114 34)" fill="#BF5AF2">
                   <rect x="-1.4" y="-5" width="2.8" height="10" rx="1.4" transform="rotate(30)"/>
                   <rect x="-1.4" y="-5" width="2.8" height="10" rx="1.4" transform="rotate(-30)"/>
                   <rect x="-5" y="-1.4" width="10" height="2.8" rx="1.4"/>
@@ -1089,11 +1089,8 @@
       tl.to(hills, {yPercent:0, opacity:1, duration:.7, stagger:.1, ease:'power3.out'}, 0)
         .to(stems, {strokeDashoffset:0, duration:.7, stagger:.12, ease:'power2.out'}, .2)
         .to(leaves, {scale:1, opacity:1, duration:.35, stagger:.08, ease:'back.out(2)'}, .55)
-        .to(blooms, {scale:1, opacity:1, duration:.55, stagger:.12, ease:'back.out(1.9)'}, .6)
-        .add(function(){   // the garden stays; blooms turn slowly and the whole bed sways
-          blooms.forEach(function(b,i){ gsap.to(b, {rotation:'+=360', transformBox:'fill-box', transformOrigin:'50% 50%', duration:9+i*2, ease:'none', repeat:-1}); });
-          gsap.to(fx, {rotation:1.8, transformBox:'fill-box', transformOrigin:'50% 100%', duration:2.6, ease:'sine.inOut', yoyo:true, repeat:-1});
-        });
+        .to(blooms, {scale:1, opacity:1, duration:.55, stagger:.12, ease:'back.out(1.9)'}, .6);
+      // garden grows, then holds — flowers stay on their stems (no further motion)
       return tl;
     }
     // 04 — send it off: the banknote plane glides away (further + slower)
