@@ -219,6 +219,17 @@
   .work-item:hover .wgo,.work-item:focus-visible .wgo{opacity:1;transform:none}
   .work-item:focus-visible{outline:2px solid var(--paper);outline-offset:-2px}
 
+  /* when the section is washed in an accent, flip all card text to a colour
+     that stays readable on it (--on-accent is set per-project from luminance) */
+  #work.tint .work-item,
+  #work.tint .work-item .wtitle,
+  #work.tint .work-item .wgo{color:var(--on-accent,var(--paper));transition:color .4s var(--ease)}
+  #work.tint .work-item .kind{color:var(--on-accent,var(--paper));opacity:.72}
+  #work.tint .work-item:hover .kind{opacity:.9}
+  #work.tint .work-item .wdesc{color:var(--on-accent,var(--paper));opacity:.74}
+  #work.tint .work-item:hover .wdesc{opacity:.95}
+  #work.tint .work-item:focus-visible{outline-color:var(--on-accent,var(--paper))}
+
   /* custom "Open" cursor (desktop pointer only) — position + scale driven by
      GSAP transforms (quickTo), so no left/top layout thrash */
   .cursor{
@@ -462,25 +473,25 @@
           <h2 class="sec-title" data-reveal style="--d:1">Work</h2>
         </div>
         <div class="work-grid">
-          <button class="work-item" type="button" data-slug="pilot-light" data-accent="#B23A1E" data-reveal style="--d:2">
+          <button class="work-item" type="button" data-slug="pilot-light" data-accent="#FF9F0A" data-reveal style="--d:2">
             <span class="kind">Identity · Web</span>
             <span class="wtitle">Pilot Light</span>
             <span class="wdesc">A full rebrand and one-page site for a wood-fired neighborhood pizzeria — warm type, a flickering logo, menus that feel like the room.</span>
             <span class="wgo">Open case study ↗</span>
           </button>
-          <button class="work-item" type="button" data-slug="field-notes" data-accent="#3F5E50" data-reveal style="--d:3">
+          <button class="work-item" type="button" data-slug="field-notes" data-accent="#30D158" data-reveal style="--d:3">
             <span class="kind">Web · Motion</span>
             <span class="wtitle">Field Notes Coffee</span>
             <span class="wdesc">An animated storefront for a roaster's subscription, built around the ritual of the morning pour.</span>
             <span class="wgo">Open case study ↗</span>
           </button>
-          <button class="work-item" type="button" data-slug="marigold" data-accent="#9B2D5E" data-reveal style="--d:4">
+          <button class="work-item" type="button" data-slug="marigold" data-accent="#FF375F" data-reveal style="--d:4">
             <span class="kind">Identity</span>
             <span class="wtitle">Marigold Floral</span>
             <span class="wdesc">A bold botanical wordmark and packaging system for a studio florist that wanted to look anything but delicate.</span>
             <span class="wgo">Open case study ↗</span>
           </button>
-          <button class="work-item" type="button" data-slug="side-door" data-accent="#3A2E5C" data-reveal style="--d:5">
+          <button class="work-item" type="button" data-slug="side-door" data-accent="#5E5CE6" data-reveal style="--d:5">
             <span class="kind">Web</span>
             <span class="wtitle">The Side Door</span>
             <span class="wdesc">A reservations-first microsite for a speakeasy — dark, tactile, and impossible to forget.</span>
@@ -661,7 +672,7 @@
   <div class="cursor" id="cursor" aria-hidden="true">Open<span class="arrow">↗</span></div>
 
   <!-- case study overlay -->
-  <div class="study" id="study" role="dialog" aria-modal="true" aria-label="Case study" aria-hidden="true">
+  <div class="study" id="study" role="dialog" aria-modal="true" aria-label="Case study" aria-hidden="true" data-lenis-prevent>
     <div class="study-top">
       <span class="study-tag">Neverday · Case study</span>
       <button class="study-close" id="studyClose" type="button"><span class="x">✕</span> Close</button>
@@ -888,7 +899,7 @@
      ====================================================================== */
   var STUDIES = {
     'pilot-light':{
-      title:'Pilot Light', kind:'Identity · Web', accent:'#B23A1E', year:'2025',
+      title:'Pilot Light', kind:'Identity · Web', accent:'#FF9F0A', year:'2025',
       services:'Brand Identity, Web Design, Menu System', sector:'Wood-fired pizzeria',
       lede:'A corner pizzeria that wanted to feel like the warmest room on the block.',
       chapters:[
@@ -899,7 +910,7 @@
       stats:[{n:'+38%',l:'online orders in the first month'},{n:'0.8s',l:'time to interactive'},{n:'1',l:'flame nobody forgets'}]
     },
     'field-notes':{
-      title:'Field Notes Coffee', kind:'Web · Motion', accent:'#3F5E50', year:'2025',
+      title:'Field Notes Coffee', kind:'Web · Motion', accent:'#30D158', year:'2025',
       services:'Web Design, Motion, Subscription UX', sector:'Specialty roaster',
       lede:'A subscription site built around the ritual of the morning pour.',
       chapters:[
@@ -910,7 +921,7 @@
       stats:[{n:'2-tap',l:'subscription checkout'},{n:'+61%',l:'recurring subscribers'},{n:'4.9★',l:'average customer rating'}]
     },
     'marigold':{
-      title:'Marigold Floral', kind:'Identity', accent:'#9B2D5E', year:'2024',
+      title:'Marigold Floral', kind:'Identity', accent:'#FF375F', year:'2024',
       services:'Brand Identity, Packaging, Art Direction', sector:'Studio florist',
       lede:'A florist that wanted to look anything but delicate.',
       chapters:[
@@ -921,7 +932,7 @@
       stats:[{n:'3×',l:'wholesale accounts in a year'},{n:'+120%',l:'tagged posts on socials'},{n:'1',l:'very un-delicate wordmark'}]
     },
     'side-door':{
-      title:'The Side Door', kind:'Web', accent:'#3A2E5C', year:'2024',
+      title:'The Side Door', kind:'Web', accent:'#5E5CE6', year:'2024',
       services:'Web Design, Development, Reservations', sector:'Speakeasy bar',
       lede:'A reservations-first microsite that’s dark, tactile, and hard to forget.',
       chapters:[
@@ -939,11 +950,23 @@
   var workItems = Array.prototype.slice.call(document.querySelectorAll('.work-item'));
   var fine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
+  /* pick readable text colour for an accent (WCAG relative luminance) */
+  function textOn(hex){
+    var c = hex.replace('#','');
+    if(c.length===3) c = c.replace(/(.)/g,'$1$1');
+    var r=parseInt(c.substr(0,2),16)/255, g=parseInt(c.substr(2,2),16)/255, b=parseInt(c.substr(4,2),16)/255;
+    function lin(v){ return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4); }
+    var L = 0.2126*lin(r) + 0.7152*lin(g) + 0.0722*lin(b);
+    return L > 0.45 ? '#0A0A0A' : '#FAFAF8';   // dark text on light accents, light on dark
+  }
+
   /* accent wash following the hovered project (GSAP cross-fade) */
   workItems.forEach(function(item){
     item.addEventListener('pointerenter', function(){
       if(!workBg) return;
       var accent = item.dataset.accent;
+      workSection.style.setProperty('--accent', accent);
+      workSection.style.setProperty('--on-accent', textOn(accent));
       workSection.classList.add('tint');
       if(hasGsap && !reduce){
         gsap.to(workBg, {backgroundColor:accent, opacity:1, duration:.5, ease:'power2.out', overwrite:true});
