@@ -317,7 +317,7 @@
 
   .step{position:relative;padding-top:28px;cursor:default}
   .step:focus-visible{outline:2px solid var(--paper);outline-offset:8px;border-radius:4px}
-  .step .dot{position:absolute;top:0;left:0;width:11px;height:11px;border-radius:50%;background:var(--ink);border:1px solid var(--mute);transition:background .4s var(--ease),border-color .4s var(--ease),transform .4s var(--ease)}
+  .step .dot{position:absolute;top:0;left:0;z-index:4;width:11px;height:11px;border-radius:50%;background:var(--ink);border:1px solid var(--mute);transition:background .4s var(--ease),border-color .4s var(--ease),transform .4s var(--ease)}
   .step:hover .dot,.step:focus-within .dot{background:var(--paper);border-color:var(--paper);transform:scale(1.3)}
   .step .step-n{font-size:13px;letter-spacing:.18em;color:var(--mute);font-variant-numeric:tabular-nums}
   .step h3{margin:14px 0 10px;font-size:clamp(19px,2.1vw,24px);font-weight:600;letter-spacing:-.01em}
@@ -334,6 +334,18 @@
   .step:hover .aside,.step:focus-within .aside{grid-template-rows:1fr;opacity:1;margin-top:14px}
   /* no hover on touch — just show the asides */
   @media(hover:none){.step .aside{grid-template-rows:1fr;opacity:1;margin-top:14px}}
+
+  /* fun per-step hover effects (GSAP-driven, desktop pointer only) */
+  .step-fx{position:absolute;pointer-events:none;z-index:3}
+  .step-fx svg{display:block;width:100%;height:100%;overflow:visible}
+  /* 01/02/03 sit on the timeline near the dot and persist after playing once */
+  .fx-people{top:-50px;left:-2px;width:96px;height:60px;opacity:0}
+  .fx-gears{top:-44px;left:14px;width:60px;height:60px;opacity:0}
+  .fx-flower{top:-52px;left:4px;width:126px;height:60px;opacity:0}
+  /* 04 keeps flying off the top-right on every hover */
+  .fx-money{top:2px;right:10px;width:0;height:0}
+  .fx-money .plane-svg{position:absolute;top:0;right:0;width:52px;height:52px;opacity:0;overflow:visible}
+  .fx-money .coin{position:absolute;top:12px;right:14px;font-size:13px;font-weight:800;color:#34C759;opacity:0}
 
   /* ---- start / booking form ---- */
   /* this panel can be taller than the viewport, so flow the footer instead of
@@ -555,6 +567,30 @@
             <h3>Get to know you</h3>
             <p class="formal">We start with a long conversation — the story, the regulars, the thing you'd never put on the menu but everyone asks for.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> we turn up with too many questions and leave with three pages of notes and a new favourite dish.</span></p>
+            <span class="step-fx fx-people" aria-hidden="true">
+              <svg viewBox="0 0 96 60">
+                <g class="bubA" opacity="0">
+                  <rect x="6" y="0" width="26" height="14" rx="7" fill="#FAFAF8"/>
+                  <path d="M16 13 l3 5 l4 -5 z" fill="#FAFAF8"/>
+                  <circle cx="14" cy="7" r="1.5" fill="#0A0A0A"/><circle cx="19" cy="7" r="1.5" fill="#0A0A0A"/><circle cx="24" cy="7" r="1.5" fill="#0A0A0A"/>
+                </g>
+                <g class="bubB" opacity="0">
+                  <rect x="60" y="2" width="26" height="14" rx="7" fill="#FFD60A"/>
+                  <path d="M70 15 l3 5 l4 -5 z" fill="#FFD60A"/>
+                  <circle cx="68" cy="9" r="1.5" fill="#0A0A0A"/><circle cx="73" cy="9" r="1.5" fill="#0A0A0A"/><circle cx="78" cy="9" r="1.5" fill="#0A0A0A"/>
+                </g>
+                <g class="chA">
+                  <rect x="16" y="28" width="22" height="28" rx="11" fill="#FAFAF8"/>
+                  <circle cx="24" cy="40" r="1.8" fill="#0A0A0A"/><circle cx="31" cy="40" r="1.8" fill="#0A0A0A"/>
+                  <path d="M24 45 q3.5 3 7 0" stroke="#0A0A0A" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+                </g>
+                <g class="chB">
+                  <rect x="58" y="32" width="20" height="24" rx="10" fill="#FFD60A"/>
+                  <circle cx="64" cy="42" r="1.7" fill="#0A0A0A"/><circle cx="71" cy="42" r="1.7" fill="#0A0A0A"/>
+                  <path d="M64 47 q3 2 7 0" stroke="#0A0A0A" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+                </g>
+              </svg>
+            </span>
           </div>
           <div class="step" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
@@ -562,6 +598,25 @@
             <h3>Find the angle</h3>
             <p class="formal">We come back with one sharp direction, argued for — not ten safe ones to average out into mush.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> we fight about it for a week first, so you never have to sit through the bad ideas.</span></p>
+            <span class="step-fx fx-gears" aria-hidden="true">
+              <svg viewBox="0 0 60 60">
+                <g class="gearA" fill="#BFBFBB"><g transform="translate(15 42)">
+                  <rect x="-2.5" y="-11" width="5" height="22" rx="1.6" transform="rotate(30)"/>
+                  <rect x="-2.5" y="-11" width="5" height="22" rx="1.6" transform="rotate(-30)"/>
+                  <rect x="-11" y="-2.5" width="22" height="5" rx="1.6"/>
+                </g></g>
+                <g class="gearB" fill="#97978F"><g transform="translate(45 17)">
+                  <rect x="-2.25" y="-9" width="4.5" height="18" rx="1.5" transform="rotate(30)"/>
+                  <rect x="-2.25" y="-9" width="4.5" height="18" rx="1.5" transform="rotate(-30)"/>
+                  <rect x="-9" y="-2.25" width="18" height="4.5" rx="1.5"/>
+                </g></g>
+                <g class="aster" fill="#FAFAF8"><g transform="translate(30 29)">
+                  <rect x="-3" y="-15" width="6" height="30" rx="1.5" transform="rotate(30)"/>
+                  <rect x="-3" y="-15" width="6" height="30" rx="1.5" transform="rotate(-30)"/>
+                  <rect x="-15" y="-3" width="30" height="6" rx="1.5"/>
+                </g></g>
+              </svg>
+            </span>
           </div>
           <div class="step" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
@@ -569,13 +624,74 @@
             <h3>Make it real</h3>
             <p class="formal">Design and build happen side by side, so what you sign off is what actually ships — in the browser, not a flat picture of one.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> no "that's not what the mockup looked like." The mockup <i>was</i> the website.</span></p>
+            <span class="step-fx fx-flower" aria-hidden="true">
+              <svg viewBox="0 0 130 62">
+                <path class="hill" d="M-15 62 Q 38 46 82 53 T 150 50 L150 62 Z" fill="#16301F"/>
+                <path class="hill" d="M-15 62 Q 58 52 102 56 T 165 53 L165 62 Z" fill="#1F4329"/>
+                <!-- medium flower (left) -->
+                <path class="stem" d="M34 53 C 32 44, 36 33, 34 27" stroke="#2E8B57" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+                <g class="bloom"><g transform="translate(34 24)" fill="#FF9F0A">
+                  <rect x="-2" y="-8" width="4" height="16" rx="2" transform="rotate(30)"/>
+                  <rect x="-2" y="-8" width="4" height="16" rx="2" transform="rotate(-30)"/>
+                  <rect x="-8" y="-2" width="16" height="4" rx="2"/>
+                  <circle r="2.3" fill="#FFE08A"/>
+                </g></g>
+                <!-- big flower (centre) -->
+                <path class="stem" d="M64 53 C 61 41, 67 28, 64 19" stroke="#2E8B57" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path class="leaf" d="M64 42 C 54 38, 52 31, 59 30 C 63 30.5, 64 37, 64 42 Z" fill="#34A65A"/>
+                <path class="leaf" d="M64 35 C 74 32, 76 25, 69 24 C 65 24.5, 64 30, 64 35 Z" fill="#3FBF63"/>
+                <g class="bloom"><g transform="translate(64 16)" fill="#FF5C8A">
+                  <rect x="-2.5" y="-11" width="5" height="22" rx="2.5" transform="rotate(30)"/>
+                  <rect x="-2.5" y="-11" width="5" height="22" rx="2.5" transform="rotate(-30)"/>
+                  <rect x="-11" y="-2.5" width="22" height="5" rx="2.5"/>
+                  <circle r="3" fill="#FFD60A"/>
+                </g></g>
+                <!-- small flower (right) -->
+                <path class="stem" d="M96 53 C 94 45, 98 34, 96 28" stroke="#2E8B57" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                <g class="bloom"><g transform="translate(96 26)" fill="#FFD60A">
+                  <rect x="-1.75" y="-6.5" width="3.5" height="13" rx="1.75" transform="rotate(30)"/>
+                  <rect x="-1.75" y="-6.5" width="3.5" height="13" rx="1.75" transform="rotate(-30)"/>
+                  <rect x="-6.5" y="-1.75" width="13" height="3.5" rx="1.75"/>
+                  <circle r="2" fill="#FF9F0A"/>
+                </g></g>
+                <!-- tiny bud (far right) -->
+                <path class="stem" d="M114 53 C 113 47, 115 40, 114 36" stroke="#2E8B57" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <g class="bloom"><g transform="translate(114 34)" fill="#BF5AF2">
+                  <rect x="-1.4" y="-5" width="2.8" height="10" rx="1.4" transform="rotate(30)"/>
+                  <rect x="-1.4" y="-5" width="2.8" height="10" rx="1.4" transform="rotate(-30)"/>
+                  <rect x="-5" y="-1.4" width="10" height="2.8" rx="1.4"/>
+                  <circle r="1.6" fill="#FFD60A"/>
+                </g></g>
+              </svg>
+            </span>
           </div>
-          <div class="step" tabindex="0">
+          <div class="step send" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
             <span class="step-n">04</span>
             <h3>Send it off</h3>
             <p class="formal">We launch, hand over the keys, and stay close through the first busy stretch while everything settles.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> you will not get a goodbye Loom and a cheerful "good luck out there!"</span></p>
+            <span class="step-fx fx-money" aria-hidden="true">
+              <svg class="plane-svg" viewBox="0 0 64 64">
+                <defs>
+                  <linearGradient id="billGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#5BB97D"/>
+                    <stop offset="1" stop-color="#2E8B57"/>
+                  </linearGradient>
+                  <clipPath id="wingClip"><path d="M60 5 L4 26 L28 33 Z"/></clipPath>
+                </defs>
+                <path d="M60 5 L28 33 L31 60 Z" fill="#1E6E42"/>
+                <path d="M60 5 L4 26 L28 33 Z" fill="url(#billGrad)"/>
+                <g clip-path="url(#wingClip)" font-family="Helvetica,Arial,sans-serif">
+                  <path d="M57 8 L9 26 L28 31 Z" fill="none" stroke="#D8F5E3" stroke-opacity=".55" stroke-width="1"/>
+                  <ellipse cx="33" cy="20" rx="6.5" ry="5" fill="none" stroke="#D8F5E3" stroke-opacity=".5" stroke-width="1"/>
+                  <g stroke="#D8F5E3" stroke-opacity=".3" stroke-width=".6"><path d="M14 21 H50"/><path d="M16 24 H46"/></g>
+                  <text x="33" y="23" font-size="7" font-weight="800" fill="#0C3D22" text-anchor="middle">$</text>
+                  <text x="49" y="13" font-size="4.5" font-weight="700" fill="#D8F5E3">100</text>
+                </g>
+              </svg>
+              <span class="coin">$</span><span class="coin">$</span><span class="coin">$</span>
+            </span>
           </div>
         </div>
       </div>
@@ -893,6 +1009,134 @@
     toggle.setAttribute('aria-pressed', String(soundOn));
     if(soundOn){ ensure(); tick(); }
   });
+
+  /* ---- fun per-step hover effects on the process section ---- */
+  (function(){
+    var stepEls = document.querySelectorAll('.proc-track .step');
+    if(!stepEls.length) return;
+    var lastCha = 0;
+
+    // cha-ching (step 4) — two ascending bell notes, no audio files
+    function bell(freq, start){
+      var o1 = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain();
+      o1.type = 'triangle'; o2.type = 'sine';
+      o1.frequency.value = freq; o2.frequency.value = freq*2.01;
+      g.gain.setValueAtTime(0.0001, start);
+      g.gain.exponentialRampToValueAtTime(0.16, start+0.005);
+      g.gain.exponentialRampToValueAtTime(0.0001, start+0.45);
+      o1.connect(g); o2.connect(g); g.connect(ctx.destination);
+      o1.start(start); o2.start(start); o1.stop(start+0.5); o2.stop(start+0.5);
+    }
+    function chaChing(){
+      if(!soundOn) return;
+      ensure(); if(!ctx) return;
+      var now = performance.now();
+      if(now - lastCha < 350) return;
+      lastCha = now;
+      var t = ctx.currentTime;
+      bell(987.77, t); bell(1318.51, t+0.085);
+    }
+
+    // 01 — get to know you: two characters chat, then hang out on the line
+    function buildPeople(step){
+      var fx = step.querySelector('.fx-people');
+      var chA = fx.querySelector('.chA'), chB = fx.querySelector('.chB');
+      var bubA = fx.querySelector('.bubA'), bubB = fx.querySelector('.bubB');
+      gsap.set(fx, {opacity:1});
+      gsap.set([chA,chB], {transformBox:'fill-box', transformOrigin:'50% 100%', yPercent:30, scale:.4, opacity:0});
+      gsap.set([bubA,bubB], {transformBox:'fill-box', transformOrigin:'50% 100%', scale:0, opacity:0});
+      var tl = gsap.timeline();
+      tl.to(chA, {yPercent:0, scale:1, opacity:1, duration:.5, ease:'back.out(2)'}, 0)
+        .to(chB, {yPercent:0, scale:1, opacity:1, duration:.5, ease:'back.out(2)'}, .12)
+        .to(bubA, {scale:1, opacity:1, duration:.28, ease:'back.out(2.2)'}, .7)
+        .to(bubA, {scale:0, opacity:0, duration:.2, ease:'power2.in'}, 1.25)
+        .to(bubB, {scale:1, opacity:1, duration:.28, ease:'back.out(2.2)'}, 1.35)
+        .to(bubB, {scale:0, opacity:0, duration:.2, ease:'power2.in'}, 1.95)
+        .to(bubA, {scale:1, opacity:1, duration:.28, ease:'back.out(2.2)'}, 2.05)
+        .to(bubA, {scale:0, opacity:0, duration:.2, ease:'power2.in'}, 2.6)
+        .add(function(){   // settle into a gentle "hanging out" bob
+          gsap.to(chA, {yPercent:-9, duration:1.1, ease:'sine.inOut', yoyo:true, repeat:-1, transformOrigin:'50% 100%'});
+          gsap.to(chB, {yPercent:-9, duration:1.1, ease:'sine.inOut', yoyo:true, repeat:-1, delay:.3, transformOrigin:'50% 100%'});
+        });
+      return tl;
+    }
+    // 02 — find the angle: the asterisk meshed in gears, spinning (persistent)
+    function buildGears(step){
+      var fx = step.querySelector('.fx-gears');
+      var gA = fx.querySelector('.gearA'), gB = fx.querySelector('.gearB'), as = fx.querySelector('.aster');
+      gsap.set(fx, {opacity:0, scale:.55, transformBox:'fill-box', transformOrigin:'50% 50%'});
+      var tl = gsap.timeline();
+      tl.to(fx, {opacity:1, scale:1, duration:.5, ease:'back.out(2)'}, 0);
+      // meshed: the big centre asterisk turns one way, the two it drives turn the other
+      gsap.to(as, {rotation:360,  svgOrigin:'30 29', duration:6.5, ease:'none', repeat:-1});
+      gsap.to(gA, {rotation:-360, svgOrigin:'15 42', duration:4.6, ease:'none', repeat:-1});
+      gsap.to(gB, {rotation:-360, svgOrigin:'45 17', duration:3.8, ease:'none', repeat:-1});
+      return tl;
+    }
+    // 03 — make it real: a little garden grows from the line (hills + flowers)
+    function buildFlower(step){
+      var fx = step.querySelector('.fx-flower');
+      var hills = fx.querySelectorAll('.hill');
+      var stems = fx.querySelectorAll('.stem');
+      var leaves = fx.querySelectorAll('.leaf');
+      var blooms = fx.querySelectorAll('.bloom');
+      gsap.set(fx, {opacity:1});
+      gsap.set(hills, {yPercent:70, opacity:0, transformBox:'fill-box', transformOrigin:'50% 100%'});
+      stems.forEach(function(s){ var len = s.getTotalLength(); gsap.set(s, {strokeDasharray:len, strokeDashoffset:len}); });
+      gsap.set(leaves, {scale:0, opacity:0, transformBox:'fill-box', transformOrigin:'50% 100%'});
+      gsap.set(blooms, {scale:0, opacity:0, transformBox:'fill-box', transformOrigin:'50% 50%'});
+      var tl = gsap.timeline();
+      tl.to(hills, {yPercent:0, opacity:1, duration:.7, stagger:.1, ease:'power3.out'}, 0)
+        .to(stems, {strokeDashoffset:0, duration:.7, stagger:.12, ease:'power2.out'}, .2)
+        .to(leaves, {scale:1, opacity:1, duration:.35, stagger:.08, ease:'back.out(2)'}, .55)
+        .to(blooms, {scale:1, opacity:1, duration:.55, stagger:.12, ease:'back.out(1.9)'}, .6);
+      // garden grows, then holds — flowers stay on their stems (no further motion)
+      return tl;
+    }
+    // 04 — send it off: the banknote plane glides away (further + slower)
+    function buildPlane(step){
+      var plane = step.querySelector('.plane-svg'), coins = step.querySelectorAll('.coin'), tl = gsap.timeline();
+      gsap.set(plane, {x:0, y:0, rotation:0, scale:.8, opacity:1});
+      tl.to(plane, {scale:1, duration:.3, ease:'power2.out'}, 0)
+        .to(plane, {x:250, y:-210, rotation:16, duration:1.9, ease:'power1.out'}, 0)
+        .to(plane, {opacity:0, duration:.6, ease:'power1.in'}, 1.25);
+      coins.forEach(function(c,i){
+        gsap.set(c, {x:0, y:0, scale:1, opacity:1});
+        tl.to(c, {x:64+i*26, y:-78-i*30, scale:.5, opacity:0, duration:1.5, ease:'power1.out'}, .15+i*0.12);
+      });
+      return tl;
+    }
+
+    // 01–03: play once on first hover/focus, then the scene persists
+    function wireOnce(step, build){
+      if(!step) return;
+      var played = false;
+      function run(){
+        if(played || !hasGsap || reduce || !fine) return;
+        played = true; build(step);
+      }
+      step.addEventListener('pointerenter', function(e){ if(e.pointerType === 'touch') return; run(); });
+      step.addEventListener('focus', run);
+    }
+    // 04: replays on every hover, with the cha-ching
+    function wireRepeat(step, build, withSound){
+      if(!step) return;
+      var busy = false;
+      function run(){
+        if(withSound) chaChing();
+        if(!hasGsap || reduce || !fine || busy) return;
+        busy = true;
+        build(step).eventCallback('onComplete', function(){ busy = false; });
+      }
+      step.addEventListener('pointerenter', function(e){ if(e.pointerType === 'touch') return; run(); });
+      step.addEventListener('focus', run);
+    }
+
+    wireOnce(stepEls[0], buildPeople);
+    wireOnce(stepEls[1], buildGears);
+    wireOnce(stepEls[2], buildFlower);
+    wireRepeat(stepEls[3], buildPlane, true);
+  })();
 
   /* ======================================================================
      WORK: accent wash on hover, "Open" cursor, and case-study overlay
