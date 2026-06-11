@@ -335,6 +335,11 @@
   /* no hover on touch — just show the asides */
   @media(hover:none){.step .aside{grid-template-rows:1fr;opacity:1;margin-top:14px}}
 
+  /* "Send it off" — money paper-plane that flies off on hover (GSAP-driven) */
+  .step.send .money-fx{position:absolute;top:2px;right:8px;width:0;height:0;pointer-events:none;z-index:3}
+  .step.send .plane-svg{position:absolute;top:0;right:0;width:38px;height:38px;opacity:0}
+  .step.send .coin{position:absolute;top:6px;right:6px;font-size:13px;font-weight:800;color:#34C759;opacity:0}
+
   /* ---- start / booking form ---- */
   /* this panel can be taller than the viewport, so flow the footer instead of
      pinning it (space-between keeps it at the bottom when there's room) */
@@ -570,12 +575,21 @@
             <p class="formal">Design and build happen side by side, so what you sign off is what actually ships — in the browser, not a flat picture of one.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> no "that's not what the mockup looked like." The mockup <i>was</i> the website.</span></p>
           </div>
-          <div class="step" tabindex="0">
+          <div class="step send" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
             <span class="step-n">04</span>
             <h3>Send it off</h3>
             <p class="formal">We launch, hand over the keys, and stay close through the first busy stretch while everything settles.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> you will not get a goodbye Loom and a cheerful "good luck out there!"</span></p>
+            <span class="money-fx" aria-hidden="true">
+              <svg class="plane-svg" viewBox="0 0 48 48">
+                <path d="M45 3 L3 20 L21 26 Z" fill="#34C759"/>
+                <path d="M45 3 L21 26 L25 45 Z" fill="#248A3D"/>
+                <path d="M45 3 L21 26 L19 23 Z" fill="#176B30"/>
+                <text x="13.5" y="20.5" font-size="9" font-weight="800" fill="#0A0A0A" font-family="Helvetica,Arial,sans-serif">$</text>
+              </svg>
+              <span class="coin">$</span><span class="coin">$</span><span class="coin">$</span>
+            </span>
           </div>
         </div>
       </div>
@@ -893,6 +907,53 @@
     toggle.setAttribute('aria-pressed', String(soundOn));
     if(soundOn){ ensure(); tick(); }
   });
+
+  /* ---- "Send it off": cha-ching + money paper-plane ---- */
+  (function(){
+    var send = document.querySelector('.step.send');
+    if(!send) return;
+    var plane = send.querySelector('.plane-svg');
+    var coins = Array.prototype.slice.call(send.querySelectorAll('.coin'));
+    var flying = false, lastCha = 0;
+
+    // a single bell note (triangle + octave shimmer) with a quick decay
+    function bell(freq, start){
+      var o1 = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain();
+      o1.type = 'triangle'; o2.type = 'sine';
+      o1.frequency.value = freq; o2.frequency.value = freq*2.01;
+      g.gain.setValueAtTime(0.0001, start);
+      g.gain.exponentialRampToValueAtTime(0.16, start+0.005);
+      g.gain.exponentialRampToValueAtTime(0.0001, start+0.45);
+      o1.connect(g); o2.connect(g); g.connect(ctx.destination);
+      o1.start(start); o2.start(start); o1.stop(start+0.5); o2.stop(start+0.5);
+    }
+    function chaChing(){
+      if(!soundOn) return;
+      ensure(); if(!ctx) return;
+      var now = performance.now();
+      if(now - lastCha < 350) return;            // throttle rapid re-enters
+      lastCha = now;
+      var t = ctx.currentTime;
+      bell(987.77, t);            // B5
+      bell(1318.51, t+0.085);     // E6 — the ascending "cha-CHING"
+    }
+    function fly(){
+      if(!hasGsap || reduce || !fine || flying) return;
+      flying = true;
+      gsap.set(plane, {x:0, y:0, rotation:0, scale:.65, opacity:1});
+      var tl = gsap.timeline({onComplete:function(){ flying = false; }});
+      tl.to(plane, {x:140, y:-128, rotation:24, scale:1, opacity:0, duration:.95, ease:'power2.out'}, 0);
+      coins.forEach(function(c, i){
+        gsap.set(c, {x:0, y:0, scale:1, opacity:1});
+        tl.to(c, {x:34+i*20, y:-46-i*24, scale:.5, opacity:0, duration:.8, ease:'power2.out'}, 0.05*i);
+      });
+    }
+    send.addEventListener('pointerenter', function(e){
+      if(e.pointerType === 'touch') return;
+      chaChing(); fly();
+    });
+    send.addEventListener('focus', function(){ chaChing(); fly(); });
+  })();
 
   /* ======================================================================
      WORK: accent wash on hover, "Open" cursor, and case-study overlay
