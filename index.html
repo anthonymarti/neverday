@@ -336,11 +336,15 @@
   @media(hover:none){.step .aside{grid-template-rows:1fr;opacity:1;margin-top:14px}}
 
   /* fun per-step hover effects (GSAP-driven, desktop pointer only) */
-  .step-fx{position:absolute;top:2px;right:10px;width:0;height:0;pointer-events:none;z-index:3}
-  .fx-q .q{position:absolute;top:2px;right:2px;font-size:15px;font-weight:800;color:var(--paper);opacity:0}
-  .fx-idea .bulb{position:absolute;top:-2px;right:-2px;width:30px;height:30px;opacity:0}
-  .fx-px .px{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:1.5px;background:var(--paper);opacity:0}
-  .fx-money .plane-svg{position:absolute;top:0;right:0;width:52px;height:52px;opacity:0}
+  .step-fx{position:absolute;pointer-events:none;z-index:3}
+  .step-fx svg{display:block;width:100%;height:100%;overflow:visible}
+  /* 01/02/03 sit on the timeline near the dot and persist after playing once */
+  .fx-people{top:-50px;left:-2px;width:96px;height:60px;opacity:0}
+  .fx-gears{top:-30px;left:-14px;width:60px;height:60px;opacity:0}
+  .fx-flower{top:-46px;left:2px;width:42px;height:56px;opacity:0}
+  /* 04 keeps flying off the top-right on every hover */
+  .fx-money{top:2px;right:10px;width:0;height:0}
+  .fx-money .plane-svg{position:absolute;top:0;right:0;width:52px;height:52px;opacity:0;overflow:visible}
   .fx-money .coin{position:absolute;top:12px;right:14px;font-size:13px;font-weight:800;color:#34C759;opacity:0}
 
   /* ---- start / booking form ---- */
@@ -563,7 +567,30 @@
             <h3>Get to know you</h3>
             <p class="formal">We start with a long conversation — the story, the regulars, the thing you'd never put on the menu but everyone asks for.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> we turn up with too many questions and leave with three pages of notes and a new favourite dish.</span></p>
-            <span class="step-fx fx-q" aria-hidden="true"><span class="q">?</span><span class="q">?</span><span class="q">?</span></span>
+            <span class="step-fx fx-people" aria-hidden="true">
+              <svg viewBox="0 0 96 60">
+                <g class="bubA" opacity="0">
+                  <rect x="6" y="0" width="26" height="14" rx="7" fill="#FAFAF8"/>
+                  <path d="M16 13 l3 5 l4 -5 z" fill="#FAFAF8"/>
+                  <circle cx="14" cy="7" r="1.5" fill="#0A0A0A"/><circle cx="19" cy="7" r="1.5" fill="#0A0A0A"/><circle cx="24" cy="7" r="1.5" fill="#0A0A0A"/>
+                </g>
+                <g class="bubB" opacity="0">
+                  <rect x="60" y="2" width="26" height="14" rx="7" fill="#FFD60A"/>
+                  <path d="M70 15 l3 5 l4 -5 z" fill="#FFD60A"/>
+                  <circle cx="68" cy="9" r="1.5" fill="#0A0A0A"/><circle cx="73" cy="9" r="1.5" fill="#0A0A0A"/><circle cx="78" cy="9" r="1.5" fill="#0A0A0A"/>
+                </g>
+                <g class="chA">
+                  <rect x="16" y="28" width="22" height="28" rx="11" fill="#FAFAF8"/>
+                  <circle cx="24" cy="40" r="1.8" fill="#0A0A0A"/><circle cx="31" cy="40" r="1.8" fill="#0A0A0A"/>
+                  <path d="M24 45 q3.5 3 7 0" stroke="#0A0A0A" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+                </g>
+                <g class="chB">
+                  <rect x="58" y="32" width="20" height="24" rx="10" fill="#FFD60A"/>
+                  <circle cx="64" cy="42" r="1.7" fill="#0A0A0A"/><circle cx="71" cy="42" r="1.7" fill="#0A0A0A"/>
+                  <path d="M64 47 q3 2 7 0" stroke="#0A0A0A" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+                </g>
+              </svg>
+            </span>
           </div>
           <div class="step" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
@@ -571,18 +598,25 @@
             <h3>Find the angle</h3>
             <p class="formal">We come back with one sharp direction, argued for — not ten safe ones to average out into mush.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> we fight about it for a week first, so you never have to sit through the bad ideas.</span></p>
-            <span class="step-fx fx-idea" aria-hidden="true">
-              <svg class="bulb" viewBox="0 0 32 32">
-                <g class="rays" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round">
-                  <line x1="16" y1="1" x2="16" y2="5"/>
-                  <line x1="29" y1="9" x2="25.5" y2="11"/>
-                  <line x1="3" y1="9" x2="6.5" y2="11"/>
-                  <line x1="27.5" y1="22" x2="24" y2="20"/>
-                  <line x1="4.5" y1="22" x2="8" y2="20"/>
+            <span class="step-fx fx-gears" aria-hidden="true">
+              <svg viewBox="0 0 60 60">
+                <g class="gearA">
+                  <circle cx="14" cy="42" r="10" fill="none" stroke="#9A9A96" stroke-width="5" stroke-dasharray="3.2 3.4"/>
+                  <circle cx="14" cy="42" r="6.5" fill="#2B2B29"/>
+                  <circle cx="14" cy="42" r="2" fill="#0A0A0A"/>
                 </g>
-                <circle cx="16" cy="14" r="7" fill="#FFD60A"/>
-                <rect x="13" y="19.5" width="6" height="4.5" rx="1" fill="#FAFAF8"/>
-                <path d="M14 22 h4 M14.5 24 h3" stroke="#0A0A0A" stroke-width="1"/>
+                <g class="gearB">
+                  <circle cx="46" cy="18" r="9" fill="none" stroke="#9A9A96" stroke-width="4.5" stroke-dasharray="3 3.2"/>
+                  <circle cx="46" cy="18" r="5.8" fill="#2B2B29"/>
+                  <circle cx="46" cy="18" r="1.8" fill="#0A0A0A"/>
+                </g>
+                <g class="aster" fill="#FAFAF8">
+                  <g transform="translate(30 30)">
+                    <rect x="-3" y="-15" width="6" height="30" rx="1.5" transform="rotate(30)"/>
+                    <rect x="-3" y="-15" width="6" height="30" rx="1.5" transform="rotate(-30)"/>
+                    <rect x="-15" y="-3" width="30" height="6" rx="1.5"/>
+                  </g>
+                </g>
               </svg>
             </span>
           </div>
@@ -592,7 +626,21 @@
             <h3>Make it real</h3>
             <p class="formal">Design and build happen side by side, so what you sign off is what actually ships — in the browser, not a flat picture of one.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> no "that's not what the mockup looked like." The mockup <i>was</i> the website.</span></p>
-            <span class="step-fx fx-px" aria-hidden="true"><span class="px"></span><span class="px"></span><span class="px"></span><span class="px"></span><span class="px"></span><span class="px"></span></span>
+            <span class="step-fx fx-flower" aria-hidden="true">
+              <svg viewBox="0 0 44 60">
+                <path class="stem" d="M22 58 C 19 46, 25 34, 22 24" stroke="#2E8B57" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path class="leaf leafL" d="M22 45 C 11 41, 9 34, 16 33 C 20 33.5, 22 40, 22 45 Z" fill="#34A65A"/>
+                <path class="leaf leafR" d="M22 38 C 33 35, 35 28, 28 27 C 24 27.5, 22 33, 22 38 Z" fill="#3FBF63"/>
+                <g class="bloom">
+                  <g transform="translate(22 18)" fill="#FF5C8A">
+                    <rect x="-2.5" y="-11" width="5" height="22" rx="2.5" transform="rotate(30)"/>
+                    <rect x="-2.5" y="-11" width="5" height="22" rx="2.5" transform="rotate(-30)"/>
+                    <rect x="-11" y="-2.5" width="22" height="5" rx="2.5"/>
+                  </g>
+                  <circle cx="22" cy="18" r="3" fill="#FFD60A"/>
+                </g>
+              </svg>
+            </span>
           </div>
           <div class="step send" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
@@ -966,34 +1014,58 @@
       bell(987.77, t); bell(1318.51, t+0.085);
     }
 
-    // 01 — curiosity: question marks float up
-    function buildQuestions(step){
-      var qs = step.querySelectorAll('.q'), tl = gsap.timeline();
-      qs.forEach(function(q,i){
-        gsap.set(q, {x:0, y:0, scale:.4, opacity:1});
-        tl.to(q, {x:(i-1)*16, y:-58-i*12, scale:1, opacity:0, duration:1.1, ease:'power2.out'}, i*0.1);
-      });
+    // 01 — get to know you: two characters chat, then hang out on the line
+    function buildPeople(step){
+      var fx = step.querySelector('.fx-people');
+      var chA = fx.querySelector('.chA'), chB = fx.querySelector('.chB');
+      var bubA = fx.querySelector('.bubA'), bubB = fx.querySelector('.bubB');
+      gsap.set(fx, {opacity:1});
+      gsap.set([chA,chB], {transformBox:'fill-box', transformOrigin:'50% 100%', yPercent:30, scale:.4, opacity:0});
+      gsap.set([bubA,bubB], {transformBox:'fill-box', transformOrigin:'50% 100%', scale:0, opacity:0});
+      var tl = gsap.timeline();
+      tl.to(chA, {yPercent:0, scale:1, opacity:1, duration:.5, ease:'back.out(2)'}, 0)
+        .to(chB, {yPercent:0, scale:1, opacity:1, duration:.5, ease:'back.out(2)'}, .12)
+        .to(bubA, {scale:1, opacity:1, duration:.28, ease:'back.out(2.2)'}, .7)
+        .to(bubA, {scale:0, opacity:0, duration:.2, ease:'power2.in'}, 1.25)
+        .to(bubB, {scale:1, opacity:1, duration:.28, ease:'back.out(2.2)'}, 1.35)
+        .to(bubB, {scale:0, opacity:0, duration:.2, ease:'power2.in'}, 1.95)
+        .to(bubA, {scale:1, opacity:1, duration:.28, ease:'back.out(2.2)'}, 2.05)
+        .to(bubA, {scale:0, opacity:0, duration:.2, ease:'power2.in'}, 2.6)
+        .add(function(){   // settle into a gentle "hanging out" bob
+          gsap.to(chA, {yPercent:-9, duration:1.1, ease:'sine.inOut', yoyo:true, repeat:-1, transformOrigin:'50% 100%'});
+          gsap.to(chB, {yPercent:-9, duration:1.1, ease:'sine.inOut', yoyo:true, repeat:-1, delay:.3, transformOrigin:'50% 100%'});
+        });
       return tl;
     }
-    // 02 — the idea: a lightbulb pops with rays
-    function buildIdea(step){
-      var bulb = step.querySelector('.bulb'), rays = step.querySelector('.rays'), tl = gsap.timeline();
-      gsap.set(bulb, {scale:0, opacity:1, rotation:-10, transformOrigin:'50% 85%'});
-      gsap.set(rays, {scale:.2, opacity:.9, transformOrigin:'50% 45%'});
-      tl.to(bulb, {scale:1, rotation:0, duration:.5, ease:'back.out(2.4)'}, 0)
-        .to(rays, {scale:1.6, opacity:0, duration:.6, ease:'power2.out'}, .1)
-        .to(bulb, {opacity:0, scale:.92, duration:.55, ease:'power2.in'}, .85);
+    // 02 — find the angle: the asterisk meshed in gears, spinning (persistent)
+    function buildGears(step){
+      var fx = step.querySelector('.fx-gears');
+      var gA = fx.querySelector('.gearA'), gB = fx.querySelector('.gearB'), as = fx.querySelector('.aster');
+      gsap.set(fx, {opacity:0, scale:.55, transformBox:'fill-box', transformOrigin:'50% 50%'});
+      var tl = gsap.timeline();
+      tl.to(fx, {opacity:1, scale:1, duration:.5, ease:'back.out(2)'}, 0);
+      gsap.to(gA, {rotation:360, svgOrigin:'14 42', duration:4.2, ease:'none', repeat:-1});
+      gsap.to(gB, {rotation:-360, svgOrigin:'46 18', duration:3.2, ease:'none', repeat:-1});
+      gsap.to(as, {rotation:360, svgOrigin:'30 30', duration:6, ease:'none', repeat:-1});
       return tl;
     }
-    // 03 — make it real: pixels assemble, then scatter
-    function buildPixels(step){
-      var px = step.querySelectorAll('.px'), tl = gsap.timeline(), n = px.length;
-      px.forEach(function(p,i){
-        var ang = (i/n)*Math.PI*2;
-        gsap.set(p, {x:0, y:0, scale:0, opacity:1, rotation:0});
-        tl.to(p, {scale:1, duration:.26, ease:'back.out(3)'}, i*0.05);
-        tl.to(p, {x:Math.cos(ang)*36, y:Math.sin(ang)*36-8, scale:0, opacity:0, rotation:120, duration:.75, ease:'power2.out'}, .5+i*0.03);
-      });
+    // 03 — make it real: a flower grows from the line, blooming into the asterisk
+    function buildFlower(step){
+      var fx = step.querySelector('.fx-flower');
+      var stem = fx.querySelector('.stem'), leaves = fx.querySelectorAll('.leaf'), bloom = fx.querySelector('.bloom');
+      var len = stem.getTotalLength();
+      gsap.set(fx, {opacity:1});
+      gsap.set(stem, {strokeDasharray:len, strokeDashoffset:len});
+      gsap.set(leaves, {scale:0, opacity:0, transformBox:'fill-box', transformOrigin:'50% 100%'});
+      gsap.set(bloom, {scale:0, opacity:0, svgOrigin:'22 18'});
+      var tl = gsap.timeline();
+      tl.to(stem, {strokeDashoffset:0, duration:.8, ease:'power2.out'}, 0)
+        .to(leaves, {scale:1, opacity:1, duration:.4, stagger:.12, ease:'back.out(2)'}, .35)
+        .to(bloom, {scale:1, opacity:1, duration:.6, ease:'back.out(1.8)'}, .65)
+        .to(bloom, {rotation:180, svgOrigin:'22 18', duration:.7, ease:'power1.out'}, .65)
+        .add(function(){   // stays bloomed, with a gentle sway
+          gsap.to(fx, {rotation:3, transformBox:'fill-box', transformOrigin:'50% 100%', duration:2.2, ease:'sine.inOut', yoyo:true, repeat:-1});
+        });
       return tl;
     }
     // 04 — send it off: the banknote plane glides away (further + slower)
@@ -1010,7 +1082,19 @@
       return tl;
     }
 
-    function wire(step, build, withSound){
+    // 01–03: play once on first hover/focus, then the scene persists
+    function wireOnce(step, build){
+      if(!step) return;
+      var played = false;
+      function run(){
+        if(played || !hasGsap || reduce || !fine) return;
+        played = true; build(step);
+      }
+      step.addEventListener('pointerenter', function(e){ if(e.pointerType === 'touch') return; run(); });
+      step.addEventListener('focus', run);
+    }
+    // 04: replays on every hover, with the cha-ching
+    function wireRepeat(step, build, withSound){
       if(!step) return;
       var busy = false;
       function run(){
@@ -1023,10 +1107,10 @@
       step.addEventListener('focus', run);
     }
 
-    wire(stepEls[0], buildQuestions, false);
-    wire(stepEls[1], buildIdea, false);
-    wire(stepEls[2], buildPixels, false);
-    wire(stepEls[3], buildPlane, true);
+    wireOnce(stepEls[0], buildPeople);
+    wireOnce(stepEls[1], buildGears);
+    wireOnce(stepEls[2], buildFlower);
+    wireRepeat(stepEls[3], buildPlane, true);
   })();
 
   /* ======================================================================
