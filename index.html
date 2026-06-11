@@ -335,10 +335,13 @@
   /* no hover on touch — just show the asides */
   @media(hover:none){.step .aside{grid-template-rows:1fr;opacity:1;margin-top:14px}}
 
-  /* "Send it off" — money paper-plane that flies off on hover (GSAP-driven) */
-  .step.send .money-fx{position:absolute;top:2px;right:8px;width:0;height:0;pointer-events:none;z-index:3}
-  .step.send .plane-svg{position:absolute;top:0;right:0;width:38px;height:38px;opacity:0}
-  .step.send .coin{position:absolute;top:6px;right:6px;font-size:13px;font-weight:800;color:#34C759;opacity:0}
+  /* fun per-step hover effects (GSAP-driven, desktop pointer only) */
+  .step-fx{position:absolute;top:2px;right:10px;width:0;height:0;pointer-events:none;z-index:3}
+  .fx-q .q{position:absolute;top:2px;right:2px;font-size:15px;font-weight:800;color:var(--paper);opacity:0}
+  .fx-idea .bulb{position:absolute;top:-2px;right:-2px;width:30px;height:30px;opacity:0}
+  .fx-px .px{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:1.5px;background:var(--paper);opacity:0}
+  .fx-money .plane-svg{position:absolute;top:0;right:0;width:52px;height:52px;opacity:0}
+  .fx-money .coin{position:absolute;top:12px;right:14px;font-size:13px;font-weight:800;color:#34C759;opacity:0}
 
   /* ---- start / booking form ---- */
   /* this panel can be taller than the viewport, so flow the footer instead of
@@ -560,6 +563,7 @@
             <h3>Get to know you</h3>
             <p class="formal">We start with a long conversation — the story, the regulars, the thing you'd never put on the menu but everyone asks for.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> we turn up with too many questions and leave with three pages of notes and a new favourite dish.</span></p>
+            <span class="step-fx fx-q" aria-hidden="true"><span class="q">?</span><span class="q">?</span><span class="q">?</span></span>
           </div>
           <div class="step" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
@@ -567,6 +571,20 @@
             <h3>Find the angle</h3>
             <p class="formal">We come back with one sharp direction, argued for — not ten safe ones to average out into mush.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> we fight about it for a week first, so you never have to sit through the bad ideas.</span></p>
+            <span class="step-fx fx-idea" aria-hidden="true">
+              <svg class="bulb" viewBox="0 0 32 32">
+                <g class="rays" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round">
+                  <line x1="16" y1="1" x2="16" y2="5"/>
+                  <line x1="29" y1="9" x2="25.5" y2="11"/>
+                  <line x1="3" y1="9" x2="6.5" y2="11"/>
+                  <line x1="27.5" y1="22" x2="24" y2="20"/>
+                  <line x1="4.5" y1="22" x2="8" y2="20"/>
+                </g>
+                <circle cx="16" cy="14" r="7" fill="#FFD60A"/>
+                <rect x="13" y="19.5" width="6" height="4.5" rx="1" fill="#FAFAF8"/>
+                <path d="M14 22 h4 M14.5 24 h3" stroke="#0A0A0A" stroke-width="1"/>
+              </svg>
+            </span>
           </div>
           <div class="step" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
@@ -574,6 +592,7 @@
             <h3>Make it real</h3>
             <p class="formal">Design and build happen side by side, so what you sign off is what actually ships — in the browser, not a flat picture of one.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> no "that's not what the mockup looked like." The mockup <i>was</i> the website.</span></p>
+            <span class="step-fx fx-px" aria-hidden="true"><span class="px"></span><span class="px"></span><span class="px"></span><span class="px"></span><span class="px"></span><span class="px"></span></span>
           </div>
           <div class="step send" tabindex="0">
             <span class="dot" aria-hidden="true"></span>
@@ -581,12 +600,24 @@
             <h3>Send it off</h3>
             <p class="formal">We launch, hand over the keys, and stay close through the first busy stretch while everything settles.</p>
             <p class="aside"><span class="aside-in"><em>Between us —</em> you will not get a goodbye Loom and a cheerful "good luck out there!"</span></p>
-            <span class="money-fx" aria-hidden="true">
-              <svg class="plane-svg" viewBox="0 0 48 48">
-                <path d="M45 3 L3 20 L21 26 Z" fill="#34C759"/>
-                <path d="M45 3 L21 26 L25 45 Z" fill="#248A3D"/>
-                <path d="M45 3 L21 26 L19 23 Z" fill="#176B30"/>
-                <text x="13.5" y="20.5" font-size="9" font-weight="800" fill="#0A0A0A" font-family="Helvetica,Arial,sans-serif">$</text>
+            <span class="step-fx fx-money" aria-hidden="true">
+              <svg class="plane-svg" viewBox="0 0 64 64">
+                <defs>
+                  <linearGradient id="billGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#5BB97D"/>
+                    <stop offset="1" stop-color="#2E8B57"/>
+                  </linearGradient>
+                  <clipPath id="wingClip"><path d="M60 5 L4 26 L28 33 Z"/></clipPath>
+                </defs>
+                <path d="M60 5 L28 33 L31 60 Z" fill="#1E6E42"/>
+                <path d="M60 5 L4 26 L28 33 Z" fill="url(#billGrad)"/>
+                <g clip-path="url(#wingClip)" font-family="Helvetica,Arial,sans-serif">
+                  <path d="M57 8 L9 26 L28 31 Z" fill="none" stroke="#D8F5E3" stroke-opacity=".55" stroke-width="1"/>
+                  <ellipse cx="33" cy="20" rx="6.5" ry="5" fill="none" stroke="#D8F5E3" stroke-opacity=".5" stroke-width="1"/>
+                  <g stroke="#D8F5E3" stroke-opacity=".3" stroke-width=".6"><path d="M14 21 H50"/><path d="M16 24 H46"/></g>
+                  <text x="33" y="23" font-size="7" font-weight="800" fill="#0C3D22" text-anchor="middle">$</text>
+                  <text x="49" y="13" font-size="4.5" font-weight="700" fill="#D8F5E3">100</text>
+                </g>
               </svg>
               <span class="coin">$</span><span class="coin">$</span><span class="coin">$</span>
             </span>
@@ -908,15 +939,13 @@
     if(soundOn){ ensure(); tick(); }
   });
 
-  /* ---- "Send it off": cha-ching + money paper-plane ---- */
+  /* ---- fun per-step hover effects on the process section ---- */
   (function(){
-    var send = document.querySelector('.step.send');
-    if(!send) return;
-    var plane = send.querySelector('.plane-svg');
-    var coins = Array.prototype.slice.call(send.querySelectorAll('.coin'));
-    var flying = false, lastCha = 0;
+    var stepEls = document.querySelectorAll('.proc-track .step');
+    if(!stepEls.length) return;
+    var lastCha = 0;
 
-    // a single bell note (triangle + octave shimmer) with a quick decay
+    // cha-ching (step 4) — two ascending bell notes, no audio files
     function bell(freq, start){
       var o1 = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain();
       o1.type = 'triangle'; o2.type = 'sine';
@@ -931,28 +960,73 @@
       if(!soundOn) return;
       ensure(); if(!ctx) return;
       var now = performance.now();
-      if(now - lastCha < 350) return;            // throttle rapid re-enters
+      if(now - lastCha < 350) return;
       lastCha = now;
       var t = ctx.currentTime;
-      bell(987.77, t);            // B5
-      bell(1318.51, t+0.085);     // E6 — the ascending "cha-CHING"
+      bell(987.77, t); bell(1318.51, t+0.085);
     }
-    function fly(){
-      if(!hasGsap || reduce || !fine || flying) return;
-      flying = true;
-      gsap.set(plane, {x:0, y:0, rotation:0, scale:.65, opacity:1});
-      var tl = gsap.timeline({onComplete:function(){ flying = false; }});
-      tl.to(plane, {x:140, y:-128, rotation:24, scale:1, opacity:0, duration:.95, ease:'power2.out'}, 0);
-      coins.forEach(function(c, i){
-        gsap.set(c, {x:0, y:0, scale:1, opacity:1});
-        tl.to(c, {x:34+i*20, y:-46-i*24, scale:.5, opacity:0, duration:.8, ease:'power2.out'}, 0.05*i);
+
+    // 01 — curiosity: question marks float up
+    function buildQuestions(step){
+      var qs = step.querySelectorAll('.q'), tl = gsap.timeline();
+      qs.forEach(function(q,i){
+        gsap.set(q, {x:0, y:0, scale:.4, opacity:1});
+        tl.to(q, {x:(i-1)*16, y:-58-i*12, scale:1, opacity:0, duration:1.1, ease:'power2.out'}, i*0.1);
       });
+      return tl;
     }
-    send.addEventListener('pointerenter', function(e){
-      if(e.pointerType === 'touch') return;
-      chaChing(); fly();
-    });
-    send.addEventListener('focus', function(){ chaChing(); fly(); });
+    // 02 — the idea: a lightbulb pops with rays
+    function buildIdea(step){
+      var bulb = step.querySelector('.bulb'), rays = step.querySelector('.rays'), tl = gsap.timeline();
+      gsap.set(bulb, {scale:0, opacity:1, rotation:-10, transformOrigin:'50% 85%'});
+      gsap.set(rays, {scale:.2, opacity:.9, transformOrigin:'50% 45%'});
+      tl.to(bulb, {scale:1, rotation:0, duration:.5, ease:'back.out(2.4)'}, 0)
+        .to(rays, {scale:1.6, opacity:0, duration:.6, ease:'power2.out'}, .1)
+        .to(bulb, {opacity:0, scale:.92, duration:.55, ease:'power2.in'}, .85);
+      return tl;
+    }
+    // 03 — make it real: pixels assemble, then scatter
+    function buildPixels(step){
+      var px = step.querySelectorAll('.px'), tl = gsap.timeline(), n = px.length;
+      px.forEach(function(p,i){
+        var ang = (i/n)*Math.PI*2;
+        gsap.set(p, {x:0, y:0, scale:0, opacity:1, rotation:0});
+        tl.to(p, {scale:1, duration:.26, ease:'back.out(3)'}, i*0.05);
+        tl.to(p, {x:Math.cos(ang)*36, y:Math.sin(ang)*36-8, scale:0, opacity:0, rotation:120, duration:.75, ease:'power2.out'}, .5+i*0.03);
+      });
+      return tl;
+    }
+    // 04 — send it off: the banknote plane glides away (further + slower)
+    function buildPlane(step){
+      var plane = step.querySelector('.plane-svg'), coins = step.querySelectorAll('.coin'), tl = gsap.timeline();
+      gsap.set(plane, {x:0, y:0, rotation:0, scale:.8, opacity:1});
+      tl.to(plane, {scale:1, duration:.3, ease:'power2.out'}, 0)
+        .to(plane, {x:250, y:-210, rotation:16, duration:1.9, ease:'power1.out'}, 0)
+        .to(plane, {opacity:0, duration:.6, ease:'power1.in'}, 1.25);
+      coins.forEach(function(c,i){
+        gsap.set(c, {x:0, y:0, scale:1, opacity:1});
+        tl.to(c, {x:64+i*26, y:-78-i*30, scale:.5, opacity:0, duration:1.5, ease:'power1.out'}, .15+i*0.12);
+      });
+      return tl;
+    }
+
+    function wire(step, build, withSound){
+      if(!step) return;
+      var busy = false;
+      function run(){
+        if(withSound) chaChing();
+        if(!hasGsap || reduce || !fine || busy) return;
+        busy = true;
+        build(step).eventCallback('onComplete', function(){ busy = false; });
+      }
+      step.addEventListener('pointerenter', function(e){ if(e.pointerType === 'touch') return; run(); });
+      step.addEventListener('focus', run);
+    }
+
+    wire(stepEls[0], buildQuestions, false);
+    wire(stepEls[1], buildIdea, false);
+    wire(stepEls[2], buildPixels, false);
+    wire(stepEls[3], buildPlane, true);
   })();
 
   /* ======================================================================
