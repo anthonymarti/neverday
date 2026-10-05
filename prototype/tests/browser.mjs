@@ -3,6 +3,7 @@ import{createRequire}from'node:module';
 import{spawn}from'node:child_process';
 import{readFile}from'node:fs/promises';
 const require=createRequire('/tmp/neverday-browser/package.json'),{chromium}=require('playwright');
+const BASE=process.env.NEVERDAY_TEST_BASE||'http://127.0.0.1:4173';
 const server=spawn(process.execPath,['scripts/serve.mjs'],{stdio:'inherit'});
 let browser;
 try{
@@ -10,12 +11,12 @@ for(let i=0;i<30;i++){try{if((await fetch('http://127.0.0.1:4173')).ok)break;}ca
 browser=await chromium.launch({headless:true});
 const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[],external=[];
 page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
-page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:4173')&&!r.url().startsWith('blob:'))external.push(r.url());});
+page.on('request',r=>{if(!r.url().startsWith(new URL(BASE).origin==='null'?'file:':new URL(BASE).origin)&&!r.url().startsWith('blob:'))external.push(r.url());});
 page.setDefaultTimeout(12000);
-async function snap(name){await page.evaluate(()=>window.scrollTo(0,0));const b=await page.screenshot({type:'jpeg',quality:55});console.log('NEVERDAY_SCREEN_'+name+'='+b.toString('base64'));}
+async function snap(name){if(process.env.NEVERDAY_TEST_BASE)return;await page.evaluate(()=>window.scrollTo(0,0));const b=await page.screenshot({type:'jpeg',quality:55});console.log('NEVERDAY_SCREEN_'+name+'='+b.toString('base64'));}
 async function fits(){assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'horizontal overflow');}
 async function saved(){return page.evaluate(()=>JSON.parse(localStorage.getItem('neverday.demo.v1')));}
-await page.goto('http://127.0.0.1:4173');await page.getByRole('heading',{name:/A little data/}).waitFor();await fits();await snap('desktop-home');
+await page.goto(BASE);await page.getByRole('heading',{name:/A little data/}).waitFor();await fits();await page.keyboard.press('Tab');assert.equal(await page.locator('.skip').evaluate(el=>document.activeElement===el),true);await page.keyboard.press('Enter');assert.equal(await page.locator('#main').evaluate(el=>document.activeElement===el),true);await page.getByRole('heading',{name:/A little data/}).waitFor();await snap('desktop-home');
 await page.locator('#destination-search').fill('Atlantis');await page.getByRole('heading',{name:'No demo destination found.'}).waitFor();
 await page.getByRole('button',{name:'Clear search'}).click();await page.locator('#destination-search').fill('France');assert.equal(await page.locator('.destination').count(),1);
 await page.locator('#destination-search').fill('');await page.getByRole('button',{name:'Explore Japan demo plans',exact:true}).click();
@@ -38,17 +39,17 @@ await page.locator('.lab summary').click();await page.locator('#service-fail').c
 await page.locator('#service-fail').uncheck();await page.getByRole('button',{name:/Simulate 3 GB top-up/}).click();await page.getByText('Demo active',{exact:true}).waitFor();assert.equal((await saved()).orders[0].totalGb,8);await fits();await snap('desktop-dashboard');
 await page.getByRole('link',{name:/View demo receipt/}).click();const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Download demo receipt'}).click();const dl=await downloadPromise,receipt=JSON.parse(await readFile(await dl.path(),'utf8'));assert.equal(receipt.actualCharged,0);assert.equal(receipt.sampleTotal,21);assert.equal(receipt.activationCredentials,null);
 await page.getByRole('link',{name:/My trip/,exact:false}).first().click();
-await page.goto('http://127.0.0.1:4173/#dashboard');await page.locator('.lab summary').click();await page.getByRole('button',{name:'Simulate expiry',exact:true}).click();await page.getByText('Expired',{exact:true}).waitFor();
+await page.goto(BASE+'#dashboard');await page.locator('.lab summary').click();await page.getByRole('button',{name:'Simulate expiry',exact:true}).click();await page.getByText('Expired',{exact:true}).waitFor();
 await page.reload();await page.getByText('Expired',{exact:true}).waitFor();
-await page.goto('http://127.0.0.1:4173/#home');await page.getByRole('button',{name:'Explore Europe demo plans',exact:true}).click();await page.getByRole('link',{name:/Continue with 5 GB/}).click();await page.locator('[name=demoConsent]').check();await page.getByRole('button',{name:/Simulate purchase/}).click();await page.getByRole('heading',{name:'Your trip, ready to go.'}).waitFor();
-await page.goto('http://127.0.0.1:4173/#dashboard');await page.locator('.lab summary').click();await page.getByRole('button',{name:'Simulate unused-pack refund',exact:true}).click();await page.getByText('Demo refunded',{exact:true}).waitFor();assert.equal((await saved()).orders.length,2);
+await page.goto(BASE+'#home');await page.getByRole('button',{name:'Explore Europe demo plans',exact:true}).click();await page.getByRole('link',{name:/Continue with 5 GB/}).click();await page.locator('[name=demoConsent]').check();await page.getByRole('button',{name:/Simulate purchase/}).click();await page.getByRole('heading',{name:'Your trip, ready to go.'}).waitFor();
+await page.goto(BASE+'#dashboard');await page.locator('.lab summary').click();await page.getByRole('button',{name:'Simulate unused-pack refund',exact:true}).click();await page.getByText('Demo refunded',{exact:true}).waitFor();assert.equal((await saved()).orders.length,2);
 await page.locator('.trip-list button').filter({hasText:'Japan'}).click();await page.getByText('Expired',{exact:true}).waitFor();
-await page.setViewportSize({width:390,height:844});await page.goto('http://127.0.0.1:4173/#home');await fits();await snap('mobile-home');
-await page.goto('http://127.0.0.1:4173/#dashboard');await fits();await snap('mobile-dashboard');
-for(const width of[390,320]){await page.setViewportSize({width,height:844});for(const route of['home','plans','checkout','install','dashboard','receipt','help','brief']){await page.goto('http://127.0.0.1:4173/#'+route);await fits();}}
+await page.setViewportSize({width:390,height:844});await page.goto(BASE+'#home');await fits();await snap('mobile-home');
+await page.goto(BASE+'#dashboard');await fits();await snap('mobile-dashboard');
+for(const width of[390,320]){await page.setViewportSize({width,height:844});for(const route of['home','plans','checkout','install','dashboard','receipt','help','brief']){await page.goto(BASE+'#'+route);await fits();}}
 await page.locator('.banner [data-action=reset]').click();await page.getByRole('dialog').waitFor();await page.getByRole('dialog').getByRole('button',{name:'Keep my demo'}).click();assert.equal((await saved()).orders.length,2);
 await page.locator('.banner [data-action=reset]').click();await page.getByRole('dialog').getByRole('button',{name:'Reset demo',exact:true}).click();assert.equal(await page.evaluate(()=>localStorage.getItem('neverday.demo.v1')),null);
-await page.goto('http://127.0.0.1:4173/#dashboard');await page.getByRole('heading',{name:'Your next chapter is waiting.'}).waitFor();
+await page.goto(BASE+'#dashboard');await page.getByRole('heading',{name:'Your next chapter is waiting.'}).waitFor();
 await page.evaluate(()=>localStorage.setItem('neverday.demo.v1','{broken'));await page.reload();await page.getByRole('heading',{name:'Your next chapter is waiting.'}).waitFor();
 assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
 console.log('BROWSER_PASS: complete journey, native validation, five failure scenarios, balances, receipts, refund, expiry, multiple trips, reload/corrupt storage, reset, desktop/mobile/320px layouts; zero browser errors or external app requests.');

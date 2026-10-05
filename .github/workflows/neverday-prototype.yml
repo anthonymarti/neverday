@@ -2,7 +2,7 @@ name: Neverday prototype verification
 on:
   push:
     branches: [connectivity-prototype]
-    paths: ['prototype/**', '.github/workflows/neverday-prototype.yml']
+    paths: ['prototype/**', '!prototype/docs/**', '!prototype/README.md', '!prototype/neverday-demo.html', '.github/workflows/neverday-prototype.yml']
 permissions:
   contents: read
 jobs:
@@ -26,12 +26,10 @@ jobs:
           /tmp/neverday-browser/node_modules/.bin/playwright install --with-deps chromium
       - name: Browser journey and desktop/mobile screenshots in logs
         working-directory: prototype
-        run: node tests/browser.mjs
-      - name: Read official provider, payment and hosting sources
-        if: always()
-        working-directory: prototype
-        run: python3 scripts/research.py
-      - name: Inspect rendered official terms and unauthenticated preview
+        run: |
+          node tests/browser.mjs
+          NEVERDAY_TEST_BASE="file://$GITHUB_WORKSPACE/prototype/neverday-demo.html" node tests/browser.mjs
+      - name: Inspect final provider and free hosting terms
         if: always()
         working-directory: prototype
         run: node scripts/source-browser.mjs
