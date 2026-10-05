@@ -1,37 +1,47 @@
-# Provider comparison and verification ledger
+# Provider comparison — retrieved 2026-10-05
 
-This initial comparison records candidates and unanswered questions. Current primary-source retrieval runs in the read-only GitHub verification workflow; reviewed findings will be appended separately. No quoted wholesale rate, partnership or approval is asserted.
+Primary pages and rendered API documentation were read in Chromium and a read-only HTTP research script. Public marketing is evidence of what a provider advertises, not a contract or Neverday approval. No account was opened, funds deposited, service provisioned or sales message sent.
 
-| Provider | Model to examine | $0-upfront question |
+## Decision
+
+Finite travel-data resale is the initial product direction. **eSIM Access is the conditional supplier candidate**, because its public API and no-MOQ offer fit a small retailer better than the alternatives examined. It is NOT a partner. Its documented prepayment defeats an immediate, customer-receipt-funded $0 branded launch. Wholesale SKUs/prices, exact wallet minimum and account eligibility remain unanswered.
+
+| Business/provider | Verified public facts | Funding/onboarding/API conclusion |
 |---|---|---|
-| [Mint Mobile](https://www.mintmobile.com/) | Domestic cellular benchmark, voice/SMS, prepaid periods, porting | A retail brand is not evidence of an available no-capital wholesale reseller program |
-| [popcorn.space](https://popcorn.space/) | Global connectivity benchmark, subscription/usage, restrictions, provider sourcing | Supplier identity, API/commercial terms and cash funding must not be inferred from global coverage |
-| [eSIM Go](https://esimgo.com/) | Wholesale travel-data API | Verify no setup/minimum, wallet minimum/prepay/credit, SKU rates, sandbox and refunds |
-| [eSIM Access](https://www.esimaccess.com/) | Wholesale/reseller API | Verify deposit/top-up minimum, live costs versus sandbox, approvals and postpaid eligibility |
-| [Airalo Partners](https://www.airalo.com/partners) | Distribution/API and affiliate paths | Verify who sells/collects payment, API rights, reseller funding versus commission settlement |
-| [1GLOBAL](https://www.1global.com/) | Embedded global connectivity | Quote/onboarding/minimums/credit not public assumptions |
-| [Gigs](https://gigs.com/) | Embedded domestic cellular/MVNE path | Fees, minimum commitments and regulatory allocation need explicit confirmation |
+| [Mint Mobile](https://www.mintmobile.com/) | Mint pages returned HTTP 403 in HTTP and Chromium. [T-Mobile’s 2024 acquisition announcement](https://www.t-mobile.com/news/business/t-mobile-closes-acquisition-mint-and-ultra-mobile), successfully retrieved, identifies Mint as a direct-to-consumer prepaid brand on T-Mobile’s network and includes multi-month upfront-payment terms. These dated terms are not verified 2026 retail offers. Current Mint offers/rates could not be verified directly. | Retail plans do not establish wholesale reseller rights. No public no-capital reseller agreement was verified. Do not copy promotional retail pricing into a wholesale model. |
+| [Popcorn](https://popcorn.space/) | Site advertises $69/month, all-inclusive, U.S. number, talk/text/data in 180+ countries, number transfer, eSIM, optional AI assistant, backup eSIM and in-app backup dialer. “Unlimited” is subject to its [Play by the Rules](https://popcorn.space/rules) policy: nearing 50 GB/month is flagged, occasional hotspot only, not home-Wi-Fi replacement; personal use, no resale/sharing/commercial use. These are vendor claims, not Neverday coverage. | A full U.S. phone service with global roaming is substantially broader than travel-data resale. Site does not establish underlying wholesale supplier identity, available API rights, settlement or reseller credit. Global connectivity can use roaming agreements and supplemental profiles; the marketing page alone cannot prove its contractual architecture. |
+| [eSIM Go](https://esimgo.com/) / [API docs](https://docs.esim-go.com/) | Homepage says no platform fees, pay wholesale on what you sell, and **minimum spend $10,000/month**, credited against plans sold. Advertises 190+ countries/500+ networks; API, webhooks and portal. Docs describe portal signup/API key. | Excluded from this budget under the current public offer. Do not confuse “no platform fees” with no commitments. Example storefront figures in docs are not a verified wholesale price book. |
+| [eSIM Access](https://esimaccess.com/) / [API docs](https://docs.esimaccess.com/) | Advertises “No commitments. No minimums” and “No MOQ.” [Fee documentation](https://esimaccess.com/docs/do-i-need-to-sign-a-contract-and-a-moq-to-kickoff/) explicitly advertises no monthly setup, eSIM activation or RSP provisioning/monthly fees. Redtea Mobile-powered; console, on-demand/batch ordering, top-up/suspend APIs. API Quick Start says “Deposit funds for testing and refunding.” Changelog says offline post-paying changed to online pre-paying. API explicitly says **no sandbox**, live orders must be cancelled as needed; testing funds may be requested. | Best conditional fit; requires supplier-side funds before order. No zero-deposit credit agreement verified. API keys obtained in account; 8 requests/sec documented. [Customer FAQ](https://esimaccess.com/docs/primary-sim-esims-hotspot-sms-voice-of-using-esims/) describes generally data-only SKUs, data roaming required, hotspot support, no transfer of a once-scanned QR to a different device; [routing guide](https://esimaccess.com/docs/how-does-our-data-roaming-work/) says mainly Home-Routed Roaming. Treat these as supplier-level guidance and verify actual SKU/model details. FAQ says terms acceptance, business details for volume, possible account verification; card/PayPal/wire funding and non-expiring balance. [Partner terms](https://esimaccess.com/docs/terms-of-service/) explicitly say deposits cannot be refunded, prices may change without notice, partner bears transaction/tax/registration obligations, and agreement takes effect at account creation. Exact funding floor, account approval and authenticated SKU rates remain unverified. No account created and no live API calls made. |
+| [Airalo Partners](https://partners.airalo.com/) | Public site lists Partner Integrations, Reseller Platform, Co-branding and Affiliate programs and a developer portal. [Reseller](https://partners.airalo.com/solutions/resellers) advertises purchasing/distributing/managing eSIMs; [affiliate](https://partners.airalo.com/solutions/affiliates) advertises commissions/referral links. | Reseller and affiliate are distinct. No published credit/minimum/deposit/commission approval was verified. Affiliate could leave Airalo as seller and collector, avoiding Neverday inventory funding, subject to program acceptance and written terms. No API partnership claimed. |
+| [1GLOBAL](https://www.1global.com/) | Advertises embedded branded connectivity, APIs and broad international connectivity/network licensing. | Sales-led commercial terms. No public no-setup/no-minimum/credit terms or applicable wholesale rates verified. Not the first budget candidate. |
+| [Gigs](https://gigs.com/) | Advertises embedded cellular APIs and Carrier of Record/compliance/payment/tax services. | A relevant domestic enablement alternative; onboarding, fees, commitments, deposits and division of legal duties need a quote. No $0 arrangement verified; “Carrier of Record” is not proof that Neverday has no obligations. |
 
-## Verify each economic claim
+## Supplier cancellation versus cash refunds
 
-No setup fees; no minimum monthly commitments; no mandatory prepaid inventory; no deposit or wallet minimum; per-customer/usage charges; actual postpaid credit to a new business. Separately verify whether customer receipts are available before supplier payment. “Pay as you go” does not answer that question.
+[eSIM Access cancellation guide](https://esimaccess.com/docs/how-do-i-refund-an-unused-order/) says unused orders can be cancelled via console/API; activated eSIMs cannot be automatically cancelled and require support. Its FAQ says 180-day preactivation validity and that top-ups extend validity. That differs from Neverday’s simulated same-expiry top-up. Confirm exact per-SKU behavior. Cancelling an order does NOT mean the non-refundable wallet deposit is returned to the bank.
 
-API access is not a free test activation. A free account is not free inventory. “No minimum” might mean no monthly minimum while a minimum wallet top-up still applies.
+The public partner terms allocate permits/registrations and their costs to the partner; territory/advertising approvals, sanctions/data obligations, price-change risk and per-order liability limitations require review. Merely creating an account may enter an agreement, so no supplier account was created under the user’s prohibition.
 
-## Service restrictions
+## What remains necessary for a real supplier selection
 
-Exact countries/operators, speeds/FUP, hotspot, device/model-region exclusions, roaming and long-stay restrictions, IP routing/latency, install deadline, activation trigger, expiry, top-up eligibility, usage latency, outage liability and refund rights must be checked per SKU.
+Written setup/monthly/minimum/inventory/deposit/wallet-top-up terms; new-business credit approval and due dates; payment-method/FX fees; supplier entity/tax invoices; cancellation/refund windows and method (cash versus wallet credit); KYC/entity and jurisdiction eligibility; service SLA/support and liability.
 
-Domestic voice/SMS requires separate treatment of numbers, porting and emergency calling. The selected concept promises none of these. Data-only does not by itself establish exemption from telecom/tax rules.
+Obtain an authenticated SKU quote with country/operator list, LTE/5G, speed/FUP, tethering, network priority, IP routing/latency, install deadline, activation trigger, expiry, reinstall/device transfer, long-stay/roaming restrictions, usage lag, top-up eligibility and outage/refund terms. Coverage lists and marketing country counts are not coverage guarantees.
 
-## Official payment and legal research leads
+Neverday's sample Japan/Europe plans, arrival-triggered validity, preactivation refund and same-expiry top-up are **simulated product decisions**, not established provider entitlements. Replace them with contracted SKU behavior.
 
-- https://stripe.com/pricing
-- https://docs.stripe.com/payouts
-- https://docs.stripe.com/refunds
-- https://docs.stripe.com/disputes
-- https://www.usac.org/service-providers/contributing-to-the-usf/who-must-contribute/
-- https://www.fcc.gov/general/universal-service
-- https://vercel.com/docs/plans/hobby
+## Settlement prevents “receipts first” from being assumed
 
-Only successfully fetched, reviewed statements should become verified findings. Marketing pages cannot substitute for written credit, pricing, deposit, refund or jurisdiction approval.
+[Stripe pricing](https://stripe.com/pricing), [payouts](https://docs.stripe.com/payouts), [refunds](https://docs.stripe.com/refunds), [disputes](https://docs.stripe.com/disputes) were retrieved successfully:
+
+- Standard U.S. domestic-card example: 2.9% + $0.30; no setup/monthly fees advertised for standard Payments. International-card +1.5%, currency conversion +1% where applicable. Merchant eligibility, actual account pricing/reserves and taxes still need verification.
+- First payout typically 7–14 days, with country/industry/risk exceptions. Payout schedule does not shorten settlement availability. A successful charge is not withdrawable cash.
+- Original processing fees are not returned on refunds. Refunds draw on available balance; insufficient funds can delay card refunds.
+- Disputes reverse the payment and debit the balance, plus dispute fees. Pricing page displayed a $15 received-dispute fee; additional defense/manual-dispute terms and actual account terms must be checked.
+- Instant payouts cost extra and require eligibility; they are not a free or guaranteed new-business bridge.
+
+No customer-funded immediate fulfillment sequence was verified. Deposit + unavailable card receipts = working capital. See BUSINESS.md for clearly assumed amounts.
+
+## Evidence and limits
+
+RESEARCH.md records reviewed statements and access failures. The cited vendor pages can change; current public text is not a binding quotation. Mint current retail plans, wholesale SKU rates, wallet funding floor, supplier credit, onboarding approval, exact tax/regulatory classification and affiliate payout terms remain unverified.

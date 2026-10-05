@@ -1,54 +1,61 @@
 # Neverday connectivity prototype
 
-A complete simulation-only travel data product. This folder lives on the isolated connectivity-prototype branch. The studio's main branch, root files, deployment and domain must be preserved.
+[Protected Vercel preview](https://neverday-2w0jt8iyz-anthonyrmarti-7489s-projects.vercel.app/prototype/neverday-demo.html) · [Passing checks](https://github.com/anthonymarti/neverday/actions/runs/37257179082)
 
-## Run
+Complete simulation-only travel-data product on the isolated `connectivity-prototype` branch. Studio main/root source, production and Neverday.com were preserved.
 
-Node 22+, no runtime dependencies, accounts, API keys, payments or additional resources.
+**Access limit:** Vercel preview requires the owner's existing Vercel sign-in or a deployment-only share link. Anonymous deployed browser testing is blocked. The app itself creates no account. Connected team is Hobby, whose terms do not establish eligibility for a business prototype; no upgrade was purchased. Use the local version for $0 exploration. See docs/VERIFICATION.md.
 
-From prototype/:
-- npm run lint — JavaScript syntax validation; not a full lint/type-check claim.
-- npm test — domain tests.
-- npm run build — dist/ plus a self-contained neverday-demo.html.
-- npm start — http://127.0.0.1:4173.
+## Explore now without a web account
 
-The generated neverday-demo.html can also be opened as a local file. localStorage behavior for file URLs varies; the app catches storage failures and continues in memory.
+Open [neverday-demo.html](neverday-demo.html) in GitHub, choose **Download raw file**, and open the downloaded HTML in a browser. It includes the complete interface, styles and mock services; no install, API keys or sign-up needed. The generated file was tested through the full Chromium journey.
 
-Plain JavaScript has no compiled type-check step. Production adoption should introduce typed contracts and backend validation.
+Choose Japan → select5GB → confirm exact-device eSIM support and carrier unlock → trip date → simulation consent → demo purchase → three installation steps → My trips → simulate arrival.
 
-## Explore
+Expand **Demo lab** to try errors, usage/exhaustion, top-up, expiry and an unused-pack refund. Download a clearly labeled JSON receipt, buy/switch trips, refresh to persist, or **Reset demo**. No real charges, network traffic from the application, service, profile QR or activation credential. No phone-setting changes are needed.
 
-Choose a destination → finite pack → exact-device and carrier-unlock attestations → trip date → acknowledge simulation → demo purchase → three installation steps → My trips → simulate arrival.
+File-URL storage behavior differs between browsers; the app catches unavailable storage and continues in memory. Serving locally is the more portable option.
 
-Demo lab supports payment/provider/installation/network/top-up failure, usage and exhaustion, expiry, and an unused-pack refund. Receipt download creates a clearly labeled JSON demo receipt. New trips can be purchased and switched. Refresh persists progress. Reset deletes only neverday.demo.v1.
+## Run and build
 
-All coverage, prices, activation, usage and payments are illustrative. No real QR, SM-DP+ address, ICCID, matching ID or activation credential exists. Never change your phone settings for the demo.
+Node22+, no runtime packages. From `prototype/`:
+
+```sh
+npm run lint
+npm test
+npm run build
+npm start
+```
+
+Open http://127.0.0.1:4173. Build creates `dist/` and regenerates `neverday-demo.html`.
+
+`npm run lint` validates JavaScript syntax; this plain-JS project has no full linter or compiled type checker. Domain tests and static build passed; Chromium tested HTTP and local-file complete journeys. No production credentials are needed.
 
 ## Architecture
 
-- core.js: immutable validated lifecycle and catalog.
-- services.js: async mock Payments/Connectivity interfaces; no network calls.
-- app.js: UI, hash navigation and localStorage.
-- styles.css: original responsive identity and accessible-control intent.
-- scripts/: static build/server and primary-source retrieval.
-- tests/: domain and Playwright complete-journey checks.
+- `core.js`: immutable validated catalog/lifecycle and storage restoration.
+- `services.js`: async mock Payments/Connectivity interfaces, no network calls.
+- `app.js`: accessible-control intent, hash navigation, UI and localStorage.
+- `styles.css` / SVG: original responsive Neverday brand; system fonts.
+- `scripts/`: static build/server and read-only primary-source readers.
+- `tests/`: domain and full-browser journeys.
 
-## Free verification
+Replace mocks through an authenticated server with authoritative catalog/tax, payment webhooks, funded idempotent provisioning, reconciliation and genuine credential delivery. Browser-local state is never a production billing ledger.
 
-GitHub's current official billing documentation says standard hosted runners in public repositories are free. This existing repository is public. The workflow uses ubuntu-latest, no larger runner, no cache, no artifact upload, no deployment credentials. Its screenshots/results/source excerpts are logged; GitHub says logs/job summaries do not count toward artifact storage. Browser packages are temporarily installed in runner /tmp and are not production dependencies.
+## Saved decisions and evidence
 
-Source: https://github.com/github/docs/blob/main/content/billing/concepts/product-billing/github-actions.md (retrieved 2026-10-05).
+- [Business direction, pricing assumptions and first subscriber](docs/BUSINESS.md)
+- [Sourced provider comparison and funding terms](docs/PROVIDERS.md)
+- [Primary-source research/access limitations](docs/RESEARCH.md)
+- [Brand, Mobbin references and product rationale](docs/BRAND.md)
+- [Implemented versus simulated and integration requirements](docs/INTEGRATIONS.md)
+- [Executed checks, deployment and budget limits](docs/VERIFICATION.md)
+- [Deployment and future domain cutover](docs/DEPLOYMENT.md)
 
-Check the actual Actions run before claiming success. A configured workflow is not evidence of executed checks.
+No genuinely $0 immediate branded commercial launch is verified: the candidate requires prepayment and non-refundable wallet deposits, while card receipts settle later. No supplier account/contract was created; sample prices/coverage are illustrative.
 
-## Deployment and domain
+## Free CI and conditions
 
-The connected Vercel team reports Hobby. Verify current commercial-use eligibility and usage limits before deployment; no upgrade or paid trial is authorized. No database, server function, paid image/font, analytics, queue or Sandbox resource is needed.
+Official GitHub documentation confirms standard hosted runners are free for public repositories. This repo is public. Workflows use ubuntu-latest, no cache, artifact uploads, larger runners or paid services. Screenshots/source excerpts live in logs, which do not count artifact storage. Browser packages are installed temporarily in runner /tmp, not runtime dependencies.
 
-Use a dedicated permitted Vercel project, rootDirectory=prototype, buildCommand=npm run build, outputDirectory=dist. Set the source branch explicitly. Do not repoint the studio project or merge blindly into main. Inspect deployment protection and verify a permanent unauthenticated URL.
-
-Neverday.com/www currently serve the studio. Do not attach or change DNS. Later, after an intended cutover, back up DNS, attach the apex/www using exact Vercel-returned records, retain MX/TXT and unrelated records, and verify web and email behavior. Domain cutover must not prevent prototype delivery.
-
-## Production
-
-Read docs/INTEGRATIONS.md and docs/BUSINESS.md before taking real payment. A browser-local prototype is not a provisioning/billing backend.
+https://github.com/github/docs/blob/main/content/billing/concepts/product-billing/github-actions.md (reviewed2026-10-05). Do not introduce private-repo metered Actions, paid runners, caches/artifacts or paid APIs without checking budget authorization.
