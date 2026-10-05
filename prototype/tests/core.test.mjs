@@ -6,10 +6,10 @@ const context=vm.createContext({});vm.runInContext(await readFile(new URL('../co
 const C=context.NeverdayCore,today='2026-10-05',ready=()=>({...C.initial(),tripDate:today,compatible:true,unlocked:true});
 test('complete purchase, installation, arrival, usage, exhaustion, top-up and expiry',()=>{
 let s=C.purchase(ready(),'D1',today);assert.equal(C.current(s).planId,'japan-5');assert.throws(()=>C.activate(s,today));
-s=C.install(s,today);s=C.activate(s,today);assert.equal(C.current(s).expiresOn,'2026-10-20');
+s=C.install(s,today);s=C.activate(s,today);assert.equal(C.current(s).expiresOn,'2026-11-04');
 s=C.use(s,.25,today);assert.equal(C.current(s).usedGb,.25);s=C.use(s,100,today);assert.equal(C.status(C.current(s),today),'exhausted');
-s=C.topup(s,'T1',today);assert.equal(C.current(s).totalGb,8);assert.equal(C.current(s).expiresOn,'2026-10-20');
-assert.throws(()=>C.topup(s,'T1',today));assert.equal(C.status(C.current(s),'2026-10-20'),'expired');
+s=C.topup(s,'T1',today);assert.equal(C.current(s).totalGb,8);assert.equal(C.current(s).expiresOn,'2026-11-04');
+assert.throws(()=>C.topup(s,'T1',today));assert.equal(C.status(C.current(s),'2026-11-04'),'expired');
 s=C.expire(s,today);assert.throws(()=>C.topup(s,'T2',today));
 });
 test('device, plan and date validation',()=>{

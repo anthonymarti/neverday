@@ -1,7 +1,7 @@
 (function(root){
 'use strict';
 const regions=[
-{id:'japan',name:'Japan',code:'JP',symbol:'日',tone:'rose',countries:['Japan'],plans:[{gb:3,days:7,price:9},{gb:5,days:15,price:14},{gb:10,days:30,price:23}]},
+{id:'japan',name:'Japan',code:'JP',symbol:'日',tone:'rose',countries:['Japan'],plans:[{gb:3,days:15,price:7},{gb:5,days:30,price:11},{gb:10,days:30,price:18}]},
 {id:'europe',name:'Europe',code:'EU',symbol:'↗',tone:'sage',countries:['France','Italy','Spain','Portugal','Greece','Germany','Netherlands','Austria'],plans:[{gb:3,days:7,price:11},{gb:5,days:15,price:18},{gb:10,days:30,price:29}]},
 {id:'uk',name:'United Kingdom',code:'GB',symbol:'UK',tone:'blue',countries:['United Kingdom'],plans:[{gb:3,days:7,price:8},{gb:5,days:15,price:13},{gb:10,days:30,price:22}]},
 {id:'canada',name:'Canada',code:'CA',symbol:'北',tone:'sand',countries:['Canada'],plans:[{gb:3,days:7,price:12},{gb:5,days:15,price:19},{gb:10,days:30,price:32}]},
