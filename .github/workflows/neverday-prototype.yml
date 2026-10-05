@@ -31,3 +31,7 @@ jobs:
         if: always()
         working-directory: prototype
         run: python3 scripts/research.py
+      - name: Inspect rendered official terms and unauthenticated preview
+        if: always()
+        working-directory: prototype
+        run: node scripts/source-browser.mjs

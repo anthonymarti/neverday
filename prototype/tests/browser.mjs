@@ -12,7 +12,7 @@ const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[],
 page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
 page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:4173')&&!r.url().startsWith('blob:'))external.push(r.url());});
 page.setDefaultTimeout(12000);
-async function snap(name){const b=await page.screenshot({type:'jpeg',quality:55});console.log('NEVERDAY_SCREEN_'+name+'='+b.toString('base64'));}
+async function snap(name){await page.evaluate(()=>window.scrollTo(0,0));const b=await page.screenshot({type:'jpeg',quality:55});console.log('NEVERDAY_SCREEN_'+name+'='+b.toString('base64'));}
 async function fits(){assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'horizontal overflow');}
 async function saved(){return page.evaluate(()=>JSON.parse(localStorage.getItem('neverday.demo.v1')));}
 await page.goto('http://127.0.0.1:4173');await page.getByRole('heading',{name:/A little data/}).waitFor();await fits();await snap('desktop-home');
