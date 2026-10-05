@@ -76,7 +76,7 @@ const C=NeverdayCore,S=NeverdayServices,KEY='neverday.demo.v1',main=document.get
 let state=C.initial(),busy=false,step=0,timer,storageMessage='';
 try{const raw=localStorage.getItem(KEY);if(raw){state=C.restore(raw)||C.initial();if(!C.restore(raw))storageMessage='Saved demo data was unreadable. A fresh demo has started.';}}catch{storageMessage='Storage is unavailable. Progress lasts until you reload or close this page.';}
 const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money=v=>'</html>+Number(v).toFixed(2);
+const money=v=>'$'+Number(v).toFixed(2);
 const date=v=>v?new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date(v+'T00:00:00Z')):'Not started';
 const uid=p=>p+'-'+(globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8));
 function toast(v){clearTimeout(timer);document.getElementById('toast').textContent=v;timer=setTimeout(()=>document.getElementById('toast').textContent='',5000);}
