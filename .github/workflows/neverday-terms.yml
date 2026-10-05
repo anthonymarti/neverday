@@ -23,10 +23,10 @@ jobs:
           import{createRequire}from'node:module';
           const require=createRequire('/tmp/neverday-browser/package.json'),{chromium}=require('playwright'),browser=await chromium.launch({headless:true}),page=await browser.newPage();
           try{
-          for(const url of ['https://app.esimaccess.com/public/current-price','https://esimaccess.com/docs/what-payment-methods-are-accepted/','https://partners.airalo.com/solutions/affiliates']){
+          for(const url of ['https://app.esimaccess.com/public/current-price','https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers']){
           console.log('FINAL_SOURCE_BEGIN '+url);
           try{const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});console.log('FINAL_HTTP '+response?.status()+' FINAL '+page.url());if(response?.status()>=400)continue;await page.waitForTimeout(1500);
-          if(url==='https://app.esimaccess.com/public/current-price'){console.log('PUBLIC_INPUTS '+JSON.stringify(await page.locator('input').evaluateAll(a=>a.map(x=>({placeholder:x.placeholder,type:x.type})))));const inputs=page.locator('input[placeholder*="earch"],input[placeholder*="ountry"]');if(await inputs.count()){await inputs.first().fill('Japan');await page.waitForTimeout(1500);}}
+          if(url==='https://app.esimaccess.com/public/current-price'){try{await page.waitForFunction(()=>!document.body.innerText.includes('Loading products'),null,{timeout:25000});}catch(e){console.log('PUBLIC_PRICE_LOAD_TIMEOUT');}console.log('PUBLIC_INPUTS '+JSON.stringify(await page.locator('input').evaluateAll(a=>a.map(x=>({placeholder:x.placeholder,type:x.type})))));const inputs=page.locator('input[placeholder*="earch"],input[placeholder*="ountry"]');if(await inputs.count()){await inputs.first().fill('Japan');await page.waitForTimeout(1500);}}
           if(url.includes('/affiliates')){for(const q of ['How do I become an Airalo Affiliate?','What is the commission rate?','How often will I get paid?','Can I promote my Airalo referral code?']){try{await page.getByText(q,{exact:true}).first().click({timeout:2500});}catch{}}}
           console.log('FINAL_CONTENT '+(await page.locator('body').innerText()).slice(0,25000));
           console.log('FINAL_LINKS '+JSON.stringify(await page.locator('a[href]').evaluateAll(a=>a.map(x=>({text:x.textContent.trim(),url:x.href})).filter(x=>/term|faq|commission|minimum|payment|price|program/i.test(x.text+' '+x.url)).slice(0,30))));
