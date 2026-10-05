@@ -2,7 +2,7 @@
 
 ## Passing source and browser checks
 
-[Final application verification run](https://github.com/anthonymarti/neverday/actions/runs/37257179082) completed SUCCESS for commit `12567cad4be5324bf7d9d79307c93aac3950af38`.
+[Final application verification run](https://github.com/anthonymarti/neverday/actions/runs/37258044353) completed SUCCESS for commit `dca4b7578bf57ad1971453cad8ce73fca27ddad5`.
 
 - Node22 JavaScript syntax checks passed for runtime/build/server/test/source-reader files.
 - All six Node domain tests passed: lifecycle, invalid purchase, immutability/refund, multiple orders, persisted/corrupt state, quota/top-up bounds.
@@ -26,10 +26,10 @@ Plain JavaScript: no compiled type checker or full ESLint run. `npm run lint` is
 ## Deployment, access and preservation
 
 Vercel Git integration produced a READY preview for the tested app commit:
-https://neverday-2w0jt8iyz-anthonyrmarti-7489s-projects.vercel.app/prototype/neverday-demo.html
+https://neverday-od1vwyxp7-anthonyrmarti-7489s-projects.vercel.app/prototype/neverday-demo.html
 
 Inspector:
-https://vercel.com/anthonyrmarti-7489s-projects/neverday/3vgzrb1gf97G8Jgm5pyc7B83RQyd
+https://vercel.com/anthonyrmarti-7489s-projects/neverday/7zmF1NNWbvX81cZKdJnj6MPNBkrJ
 
 Authenticated connector fetch returned HTTP200 and HTML with the exact committed standalone content plus Vercel's injected feedback script. Static CSS/index assets also returned200 on the earlier preview.
 
@@ -45,3 +45,5 @@ https://github.com/github/docs/blob/main/content/billing/concepts/product-billin
 No runtime dependencies, paid assets/fonts, DB, functions, analytics, live provider/payment API, Sandbox, paid trial or commercial agreement was added. Browser tools run temporarily in the free runner.
 
 The connected Vercel team is Hobby; no upgrade or paid resource was activated. However Hobby restricts personal noncommercial use and its fair-use definition includes business promotion. **Commercial eligibility for this branded business prototype cannot be certified.** A $0 public Vercel business deployment is blocked unless an existing eligible plan or explicit eligibility is established. Read RESEARCH.md; cost-free technical deployment alone does not establish permitted use.
+
+Final Japan revision:3GB/15days $7,5GB/30days $11,10GB/30days $18. Public list benchmarks were sourced independently; retail prices/coverage remain simulated. Revised HTTP and standalone journeys both passed in the final linked run. Final receipt assertion is actualCharged=0, sampleTotal=$18 after $11 pack+$7 illustrative top-up. The final deployed standalone returned200 through the authenticated connector; its HTML equals the committed app content plus only Vercel's feedback script.

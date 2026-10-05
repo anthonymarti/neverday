@@ -13,3 +13,5 @@ Mobbin inline previews actually inspected:
 Only returned previews were inspected, not every full-resolution screen. Those information priorities informed an original interface. No Mobbin image is shipped.
 
 Accessibility intent: labels, required native controls, fieldset/legend, skip link, landmarks, focus styles, alert/status regions, native reset dialog and reduced-motion support. Verify actual contrast/focus/screen-reader behavior; automated journey checks alone do not prove WCAG conformance.
+
+Final lead demo pack: Japan5GB/30days at an independently chosen sample $11. It serves the proposed7–15day trip while matching a public supplier-listed duration. Extra validity is not an auto-renewal; actual activation/expiry still depends on contracted SKU rules. No live partnership claim is introduced.

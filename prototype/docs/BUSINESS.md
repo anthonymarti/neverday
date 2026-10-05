@@ -22,38 +22,46 @@ Mint is a domestic cellular benchmark. Popcorn advertises a $69 U.S. phone plan 
 
 ## Offer and pricing hypothesis
 
-Japan 3 GB/7 days $9; 5 GB/15 days $14; 10 GB/30 days $23. Manual 3 GB top-up $7. All sample retail prices and behavior are illustrative, not live offers, wholesale quotes or validated competitive prices.
+Japan 3 GB/15days $7;5 GB/30 days $11;10 GB/30 days $18. Manual 3 GB top-up $7. Retail prices/behavior are independently chosen hypotheses, not live offers or validated competitive prices. Durations now match the public Japan list benchmarks in PROVIDERS.md; rates are published list figures, not approved Neverday terms.
 
 Revenue would be retail margin on contracted packs and eligible top-ups. Avoid unlimited claims, auto-renewal and voice bundles. Initial refund policy in the demo permits unused/preactivation refunds; the real policy needs supplier eligibility, consumer law and fee funding. Do not launch an unbacked refund promise.
 
 ## Economics, USD
 
-Assumed $14 retail less $6 wholesale, $0.71 processing, $0.70 support, $0.42 refund/dispute allowance and $0.28 variable operations = $5.89 contribution before acquisition, tax, fixed costs and additional founder labor. With assumed $3 acquisition, $2.89 remains.
+The [official public Japan table](https://app.esimaccess.com/public/current-price), last updated 2026-10-04, lists IIJ-labelled3 GB/15 days $1.70,5 GB/30 days $2.70 and10 GB/30 days $4.70. This is public list evidence, not a contracted/account-approved rate. The5GB IIJ row labels IP asJP; local latency/quality and visited networks have not been tested.
 
-The processing example uses Stripe's published standard U.S. domestic-card 2.9% + $0.30 (exact fee $0.706, rounded $0.71), subject to actual merchant approval/pricing. ALL other costs are assumptions. International/FX/supplier funding fees are excluded. Support $0.70 is only about 2.3 minutes at assumed $18/hour; concierge onboarding may cost much more. Reserves are not expected profit and may be insufficient.
+For the $11 prototype5GB pack, use the $2.70 list benchmark, $0.62 processing, assumed $0.70 support, $0.33 refund/dispute allowance and $0.22 variable operations: **$6.43 contribution** before acquisition, tax, fixed costs and additional founder labor. With assumed $3 acquisition, $3.43 remains.
 
-| Assumed wholesale | Contribution before acquisition/tax/fixed costs | After assumed $3 acquisition |
-|---|---:|---:|
-| $4 | $7.89 | $4.89 |
-| $6 | $5.89 | $2.89 |
-| $10 | $1.89 | -$1.11 |
+Processing uses Stripe's published standard U.S. domestic-card2.9%+$0.30 (exact $0.619, rounded $0.62), subject to approval/actual pricing. Wholesale amount is a public benchmark, not a confirmed fulfillment charge. ALL support, risk, operations and acquisition costs are assumptions. International/FX/supplier funding fees are excluded. Support $0.70 is only about2.3minutes at assumed $18/hour; concierge service can cost more.
 
-If the $14 price must include an assumed 10% indirect tax, revenue net of that tax is $12.73 and the $6-wholesale contribution falls to about $4.62 before acquisition. This is a sensitivity, not a tax determination. Stripe fees remain on the gross charge. Obtain CPA advice on telecom/digital-service classification, sales taxes/nexus, tax collection/remittance and supplier VAT/GST.
+| Pack / retail hypothesis | Public supplier benchmark | Contribution with domestic processing + assumed support/risk/ops | After assumed $3 acquisition |
+|---|---:|---:|---:|
+| 3 GB/15 days / $7 | $1.70 | $3.75 | $0.75 |
+| 5 GB/30 days / $11 | $2.70 | $6.43 | $3.43 |
+| 10 GB/30 days / $18 | $4.70 | $10.88 | $7.88 |
 
-A $14 dispute can debit $14 plus the published $15 received-dispute fee while the supplier charge and processing fee may already be spent. Reserve assumptions cannot erase this exposure. Refunds also consume cash and leave original processing fees spent.
+For that comparison, support is assumed $0.70/order, risk3% of retail, variable operations2% of retail, Stripe rounded domestic-card fee. Small-pack acquisition leaves little room for taxes/labor; avoid paid acquisition until measured margin/support justify it.
+
+Supplier sensitivity at $11 retail with the5GB cost allowances: $1.70 wholesale → $7.43 pre-acquisition; $2.70 → $6.43; $3.96 → $5.17. $6 wholesale → $3.13 before acquisition, only $0.13 after $3 acquisition. Public prices can change, so margin controls and server-side price checks matter.
+
+If $11 includes an assumed10% indirect tax, net revenue is $10 and5GB contribution falls to $5.43 before acquisition; processor fee remains on gross. This is sensitivity, not tax advice. Obtain actual telecom/digital-service tax classification, nexus, supplier VAT/GST and collection/remittance treatment.
+
+An $11 dispute can debit $11 plus the published $15 received-dispute fee while supplier/processing costs remain spent. Reserve assumptions may be insufficient. Refunds also require available cash and leave original processing fees spent.
 
 ## No verified $0 commercial launch
 
 **An immediate branded launch funded solely from each customer's card receipt is not verified and is not feasible under the documented prepaid candidate workflow without bridge funds.** No supplier postpaid credit was approved. Stripe typically schedules first payouts 7–14 days; risk holds may be longer. Capture success is not settlement availability.
 
-At an assumed $6 supplier charge, the first immediate activation needs at least that supplier amount, plus the ACTUAL wallet funding floor/deposit, funding fees, taxes, service-test cost, and refund/dispute reserves. The exact unavoidable dollar requirement is unknown because no authenticated rate or wallet minimum is verified. Do not present $6 as a real launch budget.
+If the published $2.70 benchmark applies to the approved first5GB order, it still needs supplier funds in advance, plus the ACTUAL wallet funding floor/deposit, funding fees, taxes, service-test cost, and refund/dispute reserves. The exact unavoidable dollar requirement is unknown because no approved account-specific order/funding terms or wallet minimum is verified. Do not present $2.70 as a real launch budget.
 
-Ten orders/day over an assumed 14-day first-payout gap creates $840 supplier bridge need before deposits, tax, FX, processor fees and reserves. Normal settlement lag, weekends, bank delay and holds create ongoing needs after that. A practical spreadsheet should model daily available balance and maximum cash deficit, not only gross margin.
+Ten5GB orders/day over an assumed14-day first-payout gap at the $2.70 public benchmark creates $378 supplier bridge need before deposits, tax, FX, processor fees and reserves. Normal settlement lag, weekends, bank delay and holds create ongoing needs after that. A practical spreadsheet should model daily available balance and maximum cash deficit, not only gross margin.
 
 Possible routes:
-1. Approved affiliate pilot: provider remains seller/collector and funds its own delivery. Verify zero setup/minimum, commission/payout terms, disclosures and business/tax costs first.
+1. Approved affiliate pilot: provider remains seller/collector and funds its own delivery. Airalo publicly advertises10% of final sale after discounts, paid following month's28th with $15 threshold (PayPal extra2%). At an illustrative $14 net sale, commission is $1.40 and11 such sales reach$15.40; this is not validated acquisition margin or a quoted Airalo pack price. Verify zero setup/minimum, program acceptance, disclosures and business/tax costs first.
 2. Written supplier credit with no deposits/minimums and due dates safely after actual settlement; not obtained.
 3. A funded small reseller pilot with explicit wallet and risk reserve; cannot happen under the current no-spending instruction.
+
+An existing business credit line/card could bridge prepayment if supplier card funding, statement/grace period, limits and processor settlements align. This is financing and risk-bearing, not a verified $0 service cost or approved credit arrangement; no card or finance product was activated.
 
 Charging well before departure and provisioning after cleared funds may reduce the gap, but creates delivery-delay/refund obligations and still needs reserves. Do not rely on it without written supplier/processor and consumer-law validation.
 

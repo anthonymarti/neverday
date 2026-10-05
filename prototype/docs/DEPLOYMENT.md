@@ -9,7 +9,7 @@ Repository creation tool was unavailable; the clearly related public repo was re
 Existing Vercel project `neverday` remains linked to the repository. The existing Git integration automatically creates branch PREVIEWS on push; no production promotion occurred. No new paid project/resource/trial was created.
 
 Tested app preview:
-https://neverday-2w0jt8iyz-anthonyrmarti-7489s-projects.vercel.app/prototype/neverday-demo.html
+https://neverday-od1vwyxp7-anthonyrmarti-7489s-projects.vercel.app/prototype/neverday-demo.html
 
 This explicit HTML path is self-contained, so it avoids subfolder slash/relative-asset issues. Other branch deployments may exist from documentation commits; application source is unchanged unless stated.
 
@@ -30,6 +30,7 @@ Once hosting eligibility is established, import the intended source into a dedic
 - no install/runtime dependencies or production secrets for demo;
 - prototype/vercel.json security headers;
 - deployment-only sharing / intended public protection settings on that dedicated project;
+- disable preview feedback on the new dedicated project if its injected script conflicts with the demo CSP; preserve existing studio settings;
 - no paid integrations, functions, analytics, databases or Sandbox.
 
 The connected create-project tool builds the repository's production branch; current production branch is the studio main. Do not repoint that branch or the existing studio project's root merely to simplify deployment. Use Vercel UI/CLI or an authorized source setup capable of selecting this branch.

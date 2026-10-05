@@ -1,6 +1,6 @@
 # Neverday connectivity prototype
 
-[Protected Vercel preview](https://neverday-2w0jt8iyz-anthonyrmarti-7489s-projects.vercel.app/prototype/neverday-demo.html) · [Passing checks](https://github.com/anthonymarti/neverday/actions/runs/37257179082)
+[Protected Vercel preview](https://neverday-od1vwyxp7-anthonyrmarti-7489s-projects.vercel.app/prototype/neverday-demo.html) · [Passing checks](https://github.com/anthonymarti/neverday/actions/runs/37258044353)
 
 Complete simulation-only travel-data product on the isolated `connectivity-prototype` branch. Studio main/root source, production and Neverday.com were preserved.
 
@@ -10,7 +10,7 @@ Complete simulation-only travel-data product on the isolated `connectivity-proto
 
 Open [neverday-demo.html](neverday-demo.html) in GitHub, choose **Download raw file**, and open the downloaded HTML in a browser. It includes the complete interface, styles and mock services; no install, API keys or sign-up needed. The generated file was tested through the full Chromium journey.
 
-Choose Japan → select5GB → confirm exact-device eSIM support and carrier unlock → trip date → simulation consent → demo purchase → three installation steps → My trips → simulate arrival.
+Choose Japan → select the sample5GB/30-day $11 pack → confirm exact-device eSIM support and carrier unlock → trip date → simulation consent → demo purchase → three installation steps → My trips → simulate arrival.
 
 Expand **Demo lab** to try errors, usage/exhaustion, top-up, expiry and an unused-pack refund. Download a clearly labeled JSON receipt, buy/switch trips, refresh to persist, or **Reset demo**. No real charges, network traffic from the application, service, profile QR or activation credential. No phone-setting changes are needed.
 
