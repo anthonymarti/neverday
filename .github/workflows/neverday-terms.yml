@@ -1,0 +1,34 @@
+name: Neverday public commercial terms
+on:
+  push:
+    branches: [connectivity-prototype]
+    paths: ['.github/workflows/neverday-terms.yml']
+permissions:
+  contents: read
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install temporary read-only browser tooling without cache
+        run: |
+          npm install --prefix /tmp/neverday-browser playwright@1.56.1 --no-audit --no-fund
+          /tmp/neverday-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Read publicly linked funding, pricing and affiliate terms
+        run: |
+          node --input-type=module <<'JS'
+          import{createRequire}from'node:module';
+          const require=createRequire('/tmp/neverday-browser/package.json'),{chromium}=require('playwright'),browser=await chromium.launch({headless:true}),page=await browser.newPage();
+          try{
+          for(const url of ['https://esimaccess.com/docs/do-i-need-to-sign-a-contract-and-a-moq-to-kickoff/','https://esimaccess.com/docs/what-are-the-available-esim-activation-methods/','https://app.esimaccess.com/public','https://partners.airalo.com/solutions/resellers','https://partners.airalo.com/solutions/affiliates']){
+          console.log('FINAL_SOURCE_BEGIN '+url);
+          try{const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});console.log('FINAL_HTTP '+response?.status()+' FINAL '+page.url());if(response?.status()>=400)continue;await page.waitForTimeout(1500);
+          if(url==='https://app.esimaccess.com/public'){console.log('PUBLIC_INPUTS '+JSON.stringify(await page.locator('input').evaluateAll(a=>a.map(x=>({placeholder:x.placeholder,type:x.type})))));const inputs=page.locator('input[placeholder*="earch"],input[placeholder*="ountry"]');if(await inputs.count()){await inputs.first().fill('Japan');await page.waitForTimeout(1500);}}
+          console.log('FINAL_CONTENT '+(await page.locator('body').innerText()).slice(0,25000));
+          console.log('FINAL_LINKS '+JSON.stringify(await page.locator('a[href]').evaluateAll(a=>a.map(x=>({text:x.textContent.trim(),url:x.href})).filter(x=>/term|faq|commission|minimum|payment|price|program/i.test(x.text+' '+x.url)).slice(0,30))));
+          }catch(e){console.log('FINAL_BLOCKED '+e.message);}finally{console.log('FINAL_SOURCE_END '+url);}
+          }}finally{await browser.close();}
+          JS
